@@ -43,8 +43,7 @@ try:
     st.markdown('<div class="blue-box">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
     
     st.write("""
-    A user-friendly software interface covering **ecotoxicological and hazard data estimates**,  
-    facilitating rapid **quantitative prediction of chemical toxicity** without relying on animal testing,  
+    A user-friendly software interface covering **ecotoxicological and hazard data estimates**, facilitating rapid **quantitative prediction of chemical toxicity** without relying on animal testing,  
     supporting **marine ecological risk assessment**.
     """)
 
