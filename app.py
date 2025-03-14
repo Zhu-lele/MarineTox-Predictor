@@ -7,7 +7,7 @@ import seaborn as sns
 st.set_page_config(page_title="Chemical Hazard Database", layout="wide")
 
 # ✅ 读取 GitHub 上的 CSV 文件
-file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-hazard-database/main/Chemical-hazard-database-20250314.csv"
+file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/Chemical-hazard-database-20250314.csv"
 
 # 🔵 自定义海洋主题样式
 ocean_background = """
