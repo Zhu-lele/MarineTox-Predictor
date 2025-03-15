@@ -17,7 +17,7 @@ page_style = """
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            font-size: 22px;
+            font-size: 30px;
             font-weight: bold;
             color: #01579b;
         }
