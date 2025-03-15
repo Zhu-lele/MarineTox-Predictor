@@ -12,12 +12,8 @@ file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-
 # 🔵 自定义海洋主题样式
 ocean_background = """
     <style>
-        body {
-            background-color: #e0f7fa;
-        }
         .stApp {
-            background-image: url("https://source.unsplash.com/1600x900/?ocean,sea");
-            background-size: cover;
+            background-color: #e0f7fa;
         }
         .stMarkdown {
             font-size: 18px;
@@ -35,21 +31,33 @@ ocean_background = """
 """
 st.markdown(ocean_background, unsafe_allow_html=True)
 
+# 📌 **添加 大连理工大学 图标**
+st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/dlut_logo.jpg", width=150)
+
+# 🎉 **Welcome Banner**
+st.markdown('<div class="blue-box">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
+
+# 📌 **模型介绍**
+st.write("""
+A user-friendly software interface covering **ecotoxicological and hazard data estimates**, facilitating rapid **quantitative prediction of chemical toxicity** without relying on animal testing,  
+supporting **marine ecological risk assessment**.
+""")
+
+# 📌 **添加模型示意图**
+st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", caption="Deep Learning Model for Marine Ecological Risk Assessment")
+
+# 📌 **模型描述**
+st.write("""
+A multi-task deep-learning model based on **molecular graph and exposure duration**, enables **end-to-end prediction of chemical toxicity** for 18 marine organisms spanning five phyla.
+""")
+
 # ✅ 读取数据
 try:
     df = pd.read_csv(file_url)
 
-    # 🎉 **Welcome Banner**
-    st.markdown('<div class="blue-box">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
-    
-    st.write("""
-    A user-friendly software interface covering **ecotoxicological and hazard data estimates**, facilitating rapid **quantitative prediction of chemical toxicity** without relying on animal testing,  
-    supporting **marine ecological risk assessment**.
-    """)
-
-    # 📊 **数据预览（去掉多余的表头）**
+    # 📊 **数据预览**
     st.write("### 🔬 Data Preview")
-    st.dataframe(df)  # **直接显示数据，不再渲染额外表头**
+    st.dataframe(df)
 
     # 📈 **数据统计**
     st.write("### 📈 Data Statistics")
