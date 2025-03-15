@@ -9,15 +9,9 @@ st.set_page_config(page_title="Chemical Hazard Database", layout="wide")
 # ✅ 读取 GitHub 上的 CSV 文件
 file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/Chemical-hazard-database-20250314.csv"
 
-# 🔵 自定义海洋主题样式
-ocean_background = """
+# 🔵 页面样式
+page_style = """
     <style>
-        .stApp {
-            background-color: #e0f7fa;
-        }
-        .stMarkdown {
-            font-size: 18px;
-        }
         .blue-box {
             background-color: #b3e5fc;
             padding: 20px;
@@ -27,9 +21,22 @@ ocean_background = """
             font-weight: bold;
             color: #01579b;
         }
+        .title-large {
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+            color: #01579b;
+            margin-top: 20px;
+        }
+        .description-small {
+            font-size: 16px;
+            text-align: center;
+            color: #333333;
+            margin-bottom: 20px;
+        }
     </style>
 """
-st.markdown(ocean_background, unsafe_allow_html=True)
+st.markdown(page_style, unsafe_allow_html=True)
 
 # 📌 **添加 大连理工大学 图标**
 st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/dlut_logo.jpg", width=150)
@@ -43,13 +50,14 @@ A user-friendly software interface covering **ecotoxicological and hazard data e
 supporting **marine ecological risk assessment**.
 """)
 
-# 📌 **添加模型示意图**
-st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", caption="Deep Learning Model for Marine Ecological Risk Assessment")
+# 📌 **添加模型介绍（标题加大）**
+st.markdown('<div class="title-large">Deep learning model for predicting marine ecotoxicity </div>', unsafe_allow_html=True)
 
-# 📌 **模型描述**
-st.write("""
-A multi-task deep-learning model based on **molecular graph and exposure duration**, enables **end-to-end prediction of chemical toxicity** for 18 marine organisms spanning five phyla.
-""")
+# 📌 **添加模型示意图**
+st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png")
+
+# 📌 **添加模型描述（字体稍小）**
+st.markdown('<div class="description-small">A multi-task deep-learning model based on <b>molecular graph and exposure duration</b>, enables <b>end-to-end prediction of chemical toxicity</b> for 18 marine organisms spanning five phyla.</div>', unsafe_allow_html=True)
 
 # ✅ 读取数据
 try:
