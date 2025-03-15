@@ -26,13 +26,13 @@ page_style = """
             font-weight: bold;
             text-align: center;
             color: #01579b;
-            margin-top: 20px;
+            margin-top: 40px;
         }
         .description-small {
             font-size: 16px;
             text-align: center;
             color: #333333;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
     </style>
 """
