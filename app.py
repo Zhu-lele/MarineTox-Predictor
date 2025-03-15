@@ -45,10 +45,13 @@ st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-fo
 st.markdown('<div class="blue-box">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
 
 # 📌 **模型介绍**
-st.write("""
-A user-friendly software interface covering **ecotoxicological and hazard data estimates**, facilitating rapid **quantitative prediction of chemical toxicity** without relying on animal testing,  
-supporting **marine ecological risk assessment**.
-""")
+st.markdown("""
+    <div style="font-size:18px; text-align:justify;">
+        A user-friendly software interface covering <b>ecotoxicological and hazard data estimates</b>, 
+        facilitating rapid <b>quantitative prediction of chemical toxicity</b> without relying on animal testing,  
+        supporting <b>marine ecological risk assessment</b>.
+    </div>
+""", unsafe_allow_html=True)
 
 # 📌 **添加模型介绍（标题加大）**
 st.markdown('<div class="title-large">Deep learning model for predicting marine ecotoxicity </div>', unsafe_allow_html=True)
@@ -57,8 +60,12 @@ st.markdown('<div class="title-large">Deep learning model for predicting marine 
 st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png")
 
 # 📌 **添加模型描述（字体稍小）**
-st.markdown('<div class="description-small">A multi-task deep-learning model based on <b>molecular graph and exposure duration</b>, enables <b>end-to-end prediction of chemical toxicity</b> for 18 marine organisms spanning five phyla.</div>', unsafe_allow_html=True)
 
+st.markdown("""
+    <div style="font-size:18px; text-align:justify;">
+       A multi-task deep-learning model based on <b>molecular graph and exposure duration</b>, enables <b>end-to-end prediction of chemical toxicity</b> for 18 marine organisms spanning five phyla.
+    </div>
+""", unsafe_allow_html=True)
 # ✅ 读取数据
 try:
     df = pd.read_csv(file_url)
