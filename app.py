@@ -46,7 +46,7 @@ st.markdown('<div class="blue-box">🌊 Welcome to Chemical Hazard Database 🔬
 
 # 📌 **模型介绍**
 st.markdown("""
-    <div style="font-size:18px; text-align:justify;">
+    <div style="font-size:25px; text-align:justify;">
         A user-friendly software interface covering <b>ecotoxicological and hazard data estimates</b>, 
         facilitating rapid <b>quantitative prediction of chemical toxicity</b> without relying on animal testing,  
         supporting <b>marine ecological risk assessment</b>.
@@ -62,7 +62,7 @@ st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-fo
 # 📌 **添加模型描述（字体稍小）**
 
 st.markdown("""
-    <div style="font-size:18px; text-align:justify;">
+    <div style="font-size:25px; text-align:justify;">
        A multi-task deep-learning model based on <b>molecular graph and exposure duration</b>, enables <b>end-to-end prediction of chemical toxicity</b> for 18 marine organisms spanning five phyla.
     </div>
 """, unsafe_allow_html=True)
