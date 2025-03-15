@@ -17,12 +17,12 @@ page_style = """
             padding: 20px;
             border-radius: 10px;
             text-align: center;
-            font-size: 30px;
+            font-size: 32px;
             font-weight: bold;
             color: #01579b;
         }
         .title-large {
-            font-size: 26px;
+            font-size: 30px;
             font-weight: bold;
             text-align: center;
             color: #01579b;
