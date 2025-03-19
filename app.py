@@ -12,7 +12,7 @@ page_style = """
     <style>
         /* 顶部标题栏 */
         .title-large {
-            font-size: 26px;
+            font-size: 30px;
             font-weight: bold;
             text-align: center;
             color: #01579b; /* 深蓝色字体 */
@@ -22,7 +22,7 @@ page_style = """
         .description-box {
             font-size: 22px;
             text-align: center;
-            color: #01579b; /* 深蓝色字体 */
+            color: #01579b;
             margin-bottom: 30px;
         }
         /* 数据库和联系信息合并框 */
@@ -37,14 +37,14 @@ page_style = """
         }
         /* 侧边栏背景颜色 */
         section[data-testid="stSidebar"] {
-            background-color: #01579b !important; /* 蓝色背景 */
+            background-color: #01579b !important;
         }
         /* 侧边栏文本字体加大 2 倍，变白色 */
         section[data-testid="stSidebar"] * {
-            font-size: 24px !important;  /* 2 倍字体大小 */
-            color: white !important;  /* 文字变白 */
+            font-size: 24px !important;
+            color: white !important;
         }
-     /* 修改侧边栏输入框、下拉框、及其标签的字体颜色为深蓝色 */
+        /* 修改侧边栏输入框、下拉框的字体颜色为深蓝色 */
         section[data-testid="stSidebar"] input, 
         section[data-testid="stSidebar"] select,
         section[data-testid="stSidebar"] label, 
@@ -57,52 +57,22 @@ page_style = """
             color: #01579b !important; /* 深蓝色 */
             font-weight: bold !important;
         }
-        
         /* 增加输入框和下拉框的高度 */
-      section[data-testid="stSidebar"] input, 
-      section[data-testid="stSidebar"] select {
-           height: 50px !important;  /* 你可以改成 60px, 70px 试试看 */
-           font-size: 20px !important; /* 让字体也变大一些 */
-           padding: 10px !important; /* 增加内部填充，使文本不贴边 */
-}
-
+        section[data-testid="stSidebar"] input, 
+        section[data-testid="stSidebar"] select {
+            height: 50px !important;  /* 你可以改成 60px, 70px 试试看 */
+            font-size: 20px !important; /* 让字体也变大一些 */
+            padding: 10px !important; /* 增加内部填充，使文本不贴边 */
+        }
     </style>
 """
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 🔹 **主页面导航**
-page = st.sidebar.radio( "",["Home", "Data Preview", "Data Filters"])
-
-# ============================== 1️⃣ HOME 页面 ==============================
-if page == "Home":
-    st.markdown('<div class="title-large">🌊 Welcome to ChemMarineTox 🌍</div>', unsafe_allow_html=True)
-
-    # 透明背景，深蓝色字体，居中
-    st.markdown('<div class="description-box">Multi-task Deep learning model for predicting marine ecotoxicity.</div>', unsafe_allow_html=True)
-
-    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", use_column_width=True)
-
-    # 📌 **数据库开发信息 + 联系方式**
-    st.markdown("""
-        <div class="contact-box">
-            The ChemMarineTox was developed by Key Laboratory of Industrial Ecology and Environmental Engineering (MOE), Dalian Key Laboratory on Chemicals Risk Control and Pollution Prevention Technology, School of Environmental Science and Technology, Dalian University of Technology<br>
-            If the toxicity data is not in our database, please contact us: 📧 <b>Zhu_lll@163.com</b>
-        </div>
-    """, unsafe_allow_html=True)
-
-# ============================== 2️⃣ Data Preview 页面 ==============================
-elif page == "Data Preview":
-    st.markdown('<div class="title-large">🔬 Toxicity Data Preview</div>', unsafe_allow_html=True)
-
-    try:
-        df = pd.read_csv(file_url)
-        st.write("### 📊 Full Dataset")
-        st.dataframe(df, height=600)  # 数据表加高
-    except Exception as e:
-        st.error(f"❌ Failed to load data: {e}")
+page = st.sidebar.radio("", ["Home", "Data Preview", "Data Filters"])
 
 # ============================== 3️⃣ Data Filters 页面 ==============================
-elif page == "Data Filters":
+if page == "Data Filters":
     st.markdown('<div class="title-large">🔍 Search Toxicity Data</div>', unsafe_allow_html=True)
 
     try:
