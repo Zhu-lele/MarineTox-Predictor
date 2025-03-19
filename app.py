@@ -46,7 +46,15 @@ page_style = """
         }
        /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */
         section[data-testid="stSidebar"] input, 
-        section[data-testid="stSidebar"] select,
+            color: #01579b !important; /* 深蓝色 */
+            font-weight: bold; /* 让文字更醒目 */
+        }
+        /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */ 
+        section[data-testid="stSidebar"] select{
+            color: #01579b !important; /* 深蓝色 */
+            font-weight: bold; /* 让文字更醒目 */
+        }
+        /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */
         section[data-testid="stSidebar"] label {
             color: #01579b !important; /* 深蓝色 */
             font-weight: bold; /* 让文字更醒目 */
