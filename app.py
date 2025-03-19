@@ -10,48 +10,41 @@ file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-
 # 🔵 页面样式（UI 美化）
 page_style = """
     <style>
-        .nav-button {
-            background-color: #01579b;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            text-align: center;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
+        /* 顶部标题栏 */
         .title-large {
             font-size: 26px;
             font-weight: bold;
             text-align: center;
-            color: white;
-            background-color: #01579b;
-            padding: 15px;
-            border-radius: 10px;
+            color: #01579b; /* 深蓝色字体 */
             margin-bottom: 20px;
         }
+        /* 页面描述 */
         .description-box {
-            font-size: 20px;
-            text-align: justify;
-            background-color: #b3e5fc;
-            padding: 15px;
-            border-radius: 10px;
-            color: #01579b;
+            font-size: 22px;
+            text-align: center;
+            color: #01579b; /* 深蓝色字体 */
             margin-bottom: 30px;
         }
-        .contact-info {
+        /* 数据库和联系信息合并框 */
+        .contact-box {
             font-size: 16px;
             text-align: center;
             color: #ffffff;
             background-color: #01579b;
-            padding: 10px;
+            padding: 15px;
             border-radius: 10px;
             margin-top: 30px;
         }
-        .sidebar-title {
-            font-size: 18px;
+        /* 侧边栏样式 */
+        section[data-testid="stSidebar"] {
+            background-color: #01579b !important; /* 蓝色背景 */
+        }
+        section[data-testid="stSidebar"] .st-emotion-cache-1oe5cao p {
+            color: white !important; /* 侧边栏文本变白 */
+        }
+        section[data-testid="stSidebar"] .st-emotion-cache-1oe5cao label {
+            color: white !important; /* 单选按钮文本变白 */
             font-weight: bold;
-            color: #01579b;
         }
     </style>
 """
@@ -64,21 +57,15 @@ page = st.sidebar.radio("📌 Navigation", ["Home", "Data Preview", "Data Filter
 if page == "Home":
     st.markdown('<div class="title-large">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
 
+    # 透明背景，深蓝色字体，居中
     st.markdown('<div class="description-box">Deep learning model for predicting marine ecotoxicity.</div>', unsafe_allow_html=True)
 
     st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", use_column_width=True)
 
-    st.markdown('<div class="description-box">A multi-task deep-learning model based on <b>molecular graph and exposure duration</b>, enabling <b>end-to-end prediction of chemical toxicity</b> for 18 marine organisms spanning five phyla.</div>', unsafe_allow_html=True)
-
-    # 📌 **数据库开发信息**
-    st.markdown('<div class="contact-info"><b>本数据库由大连理工大学环境学院发展</b></div>', unsafe_allow_html=True)
-
-    # 📌 **大连理工大学 Logo**
-    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/dlut_logo.jpg", width=150)
-
-    # 📌 **联系信息**
+    # 📌 **数据库开发信息 + 联系方式**
     st.markdown("""
-        <div class="contact-info">
+        <div class="contact-box">
+            本数据库由 <b>大连理工大学环境学院</b> 发展<br>
             If the toxicity data is not in our database, please contact us: 📧 <b>Zhu_lll@163.com</b>
         </div>
     """, unsafe_allow_html=True)
