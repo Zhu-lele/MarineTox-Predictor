@@ -16,7 +16,7 @@ page_style = """
             font-weight: bold;
             text-align: center;
             color: #01579b; /* 深蓝色字体 */
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
         /* 页面描述 */
         .description-box {
@@ -49,21 +49,21 @@ page_style = """
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 🔹 **主页面导航**
-page = st.sidebar.radio("📌 Navigation", ["Home", "Data Preview", "Data Filters"])
+page = st.sidebar.radio( ["Home", "Data Preview", "Data Filters"])
 
 # ============================== 1️⃣ HOME 页面 ==============================
 if page == "Home":
-    st.markdown('<div class="title-large">🌊 Welcome to Chemical Hazard Database 🔬 🌍</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-large">🌊 Welcome to ChemMarineTox 🌍</div>', unsafe_allow_html=True)
 
     # 透明背景，深蓝色字体，居中
-    st.markdown('<div class="description-box">Deep learning model for predicting marine ecotoxicity.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="description-box">Multi-task Deep learning model for predicting marine ecotoxicity.</div>', unsafe_allow_html=True)
 
     st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", use_column_width=True)
 
     # 📌 **数据库开发信息 + 联系方式**
     st.markdown("""
         <div class="contact-box">
-            本数据库由 <b>大连理工大学环境学院</b> 发展<br>
+            The ChemMarineTox was developed by Key Laboratory of Industrial Ecology and Environmental Engineering (MOE), Dalian Key Laboratory on Chemicals Risk Control and Pollution Prevention Technology, School of Environmental Science and Technology, Dalian University of Technology<br>
             If the toxicity data is not in our database, please contact us: 📧 <b>Zhu_lll@163.com</b>
         </div>
     """, unsafe_allow_html=True)
