@@ -49,7 +49,7 @@ page_style = """
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 🔹 **主页面导航**
-page = st.sidebar.radio( ["Home", "Data Preview", "Data Filters"])
+page = st.sidebar.radio( "",["Home", "Data Preview", "Data Filters"])
 
 # ============================== 1️⃣ HOME 页面 ==============================
 if page == "Home":
