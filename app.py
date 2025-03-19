@@ -35,16 +35,14 @@ page_style = """
             border-radius: 10px;
             margin-top: 30px;
         }
-        /* 侧边栏样式 */
+        /* 侧边栏背景颜色 */
         section[data-testid="stSidebar"] {
             background-color: #01579b !important; /* 蓝色背景 */
         }
-        section[data-testid="stSidebar"] .st-emotion-cache-1oe5cao p {
-            color: white !important; /* 侧边栏文本变白 */
-        }
-        section[data-testid="stSidebar"] .st-emotion-cache-1oe5cao label {
-            color: white !important; /* 单选按钮文本变白 */
-            font-weight: bold;
+        /* 侧边栏文本字体加大 2 倍，变白色 */
+        section[data-testid="stSidebar"] * {
+            font-size: 24px !important;  /* 2 倍字体大小 */
+            color: white !important;  /* 文字变白 */
         }
     </style>
 """
