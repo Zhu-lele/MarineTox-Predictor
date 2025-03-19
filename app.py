@@ -44,20 +44,18 @@ page_style = """
             font-size: 24px !important;  /* 2 倍字体大小 */
             color: white !important;  /* 文字变白 */
         }
-       /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */
+     /* 修改侧边栏输入框、下拉框、及其标签的字体颜色为深蓝色 */
         section[data-testid="stSidebar"] input, 
+        section[data-testid="stSidebar"] select,
+        section[data-testid="stSidebar"] label, 
+        section[data-testid="stSidebar"] div[data-testid="stSelectboxLabel"] {
             color: #01579b !important; /* 深蓝色 */
-            font-weight: bold; /* 让文字更醒目 */
+            font-weight: bold !important; /* 让文字更醒目 */
         }
-        /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */ 
-        section[data-testid="stSidebar"] select{
+        /* 修正下拉菜单展开后的字体颜色 */
+        section[data-testid="stSidebar"] div[data-baseweb="select"] div {
             color: #01579b !important; /* 深蓝色 */
-            font-weight: bold; /* 让文字更醒目 */
-        }
-        /* 修改输入框、下拉框、及其标签的字体颜色为深蓝色 */
-        section[data-testid="stSidebar"] label {
-            color: #01579b !important; /* 深蓝色 */
-            font-weight: bold; /* 让文字更醒目 */
+            font-weight: bold !important;
         }
     </style>
 """
