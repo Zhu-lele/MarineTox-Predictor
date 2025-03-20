@@ -79,7 +79,7 @@ page_style = """
 
 /* 修改下拉框内选项的字体大小 */
      section[data-testid="stSidebar"] div[data-baseweb="select"] div {
-        font-size: +18px !important; /* 修改第三个白色框（Or select from Name）内的字体 */
+        font-size: 18px !important; /* 修改第三个白色框（Or select from Name）内的字体 */
         font-weight: bold !important;
 }
 
