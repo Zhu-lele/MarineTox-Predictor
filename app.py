@@ -65,6 +65,12 @@ page_style = """
            font-size: 20px !important; /* 让字体也变大一些 */
            padding: 10px !important; /* 增加内部填充，使文本不贴边 */
 }
+        /* 修改输入框和下拉框内的字体大小 */
+      section[data-testid="stSidebar"] input, 
+      section[data-testid="stSidebar"] select {
+          font-size: 22px !important; /* 你可以改成 24px 或 26px 试试看 */
+          font-weight: bold !important; /* 让文字更醒目 */
+}
 
     </style>
 """
