@@ -68,18 +68,18 @@ page_style = """
         /* 修改输入框和下拉框内的字体大小 */
       section[data-testid="stSidebar"] input, 
       section[data-testid="stSidebar"] select {
-          font-size: 15px !important; /* 你可以改成 24px 或 26px 试试看 */
+          font-size: 18px !important; /* 你可以改成 24px 或 26px 试试看 */
           font-weight: bold !important; /* 让文字更醒目 */
         }
     /* 修改下拉框选项字体大小 */
      section[data-testid="stSidebar"] div[data-testid="stSelectboxLabel"] {
-         font-size: 22px !important; /* 修改第一个白色框（Name）字体大小 */
+         font-size: 18px !important; /* 修改第一个白色框（Name）字体大小 */
          font-weight: bold !important;
 }
 
 /* 修改下拉框内选项的字体大小 */
      section[data-testid="stSidebar"] div[data-baseweb="select"] div {
-        font-size: 22px !important; /* 修改第三个白色框（Or select from Name）内的字体 */
+        font-size: +18px !important; /* 修改第三个白色框（Or select from Name）内的字体 */
         font-weight: bold !important;
 }
 
