@@ -95,15 +95,15 @@ if page == "Home":
     st.markdown('<div class="title-large">🌊 Welcome to ChemMarineTox 🌍</div>', unsafe_allow_html=True)
 
     # 透明背景，深蓝色字体，居中
-    st.markdown('<div class="description-box">Multi-task Deep learning model for predicting marine ecotoxicity.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="description-box">ChemMarineTox, a multi-task deep learning model for end-to-end prediction of chemical toxicity on 18 marine organisms and five freshwater organisms spanning algae, crustaceans, invertebrates, molluscs and fish.</div>', unsafe_allow_html=True)
 
-    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", use_column_width=True)
+    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.png", use_container_width=True)
 
     # 📌 **数据库开发信息 + 联系方式**
     st.markdown("""
         <div class="contact-box">
-            The ChemMarineTox was developed by Key Laboratory of Industrial Ecology and Environmental Engineering (MOE), Dalian Key Laboratory on Chemicals Risk Control and Pollution Prevention Technology, School of Environmental Science and Technology, Dalian University of Technology<br>
-            If the toxicity data is not in our database, please contact us: 📧 <b>Zhu_lll@163.com</b>
+            The ChemMarineTox was developed by Key Laboratory of Industrial Ecology and Environmental Engineering (MOE),  School of Environmental Science and Technology, Dalian University of Technology<br>
+            If toxicity data of chemicals is not in our database, please contact us: 📧 <b>Zhu_lll@163.com</b>
         </div>
     """, unsafe_allow_html=True)
 
