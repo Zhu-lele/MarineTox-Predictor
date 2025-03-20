@@ -61,7 +61,7 @@ page_style = """
         /* 增加输入框和下拉框的高度 */
       section[data-testid="stSidebar"] input, 
       section[data-testid="stSidebar"] select {
-           height: 90px !important;  /* 你可以改成 60px, 70px 试试看 */
+           height: 50px !important;  /* 你可以改成 60px, 70px 试试看 */
            font-size: 20px !important; /* 让字体也变大一些 */
            padding: 10px !important; /* 增加内部填充，使文本不贴边 */
 }
