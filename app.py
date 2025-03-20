@@ -62,8 +62,8 @@ page_style = """
       section[data-testid="stSidebar"] input, 
       section[data-testid="stSidebar"] select {
            height: 80px !important;  /* 你可以改成 60px, 70px 试试看 */
-           font-size: 10px !important; /* 让字体也变大一些 */
-           padding: 0px !important; /* 增加内部填充，使文本不贴边 */
+           font-size: 5px !important; /* 让字体也变大一些 */
+           padding: 30px !important; /* 增加内部填充，使文本不贴边 */
 }
 
     </style>
