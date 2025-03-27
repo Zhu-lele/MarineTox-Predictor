@@ -92,7 +92,7 @@ page = st.sidebar.radio( "",["Home", "Data Preview", "Data Filters"])
 
 # ============================== 1️⃣ HOME 页面 ==============================
 if page == "Home":
-    st.markdown('<div class="title-large">🌊 Welcome to ChemMarineTox 🌍</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-large">🌊 Welcome to MarineTox Predictor 🌍</div>', unsafe_allow_html=True)
 
     # 透明背景，深蓝色字体，居中
     st.markdown('<div class="description-box">ChemMarineTox, a multi-task deep learning model for end-to-end prediction of chemical toxicity on 18 marine organisms and five freshwater organisms spanning algae, crustaceans, invertebrates, molluscs and fish.</div>', unsafe_allow_html=True)
