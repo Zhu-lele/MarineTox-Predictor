@@ -13,21 +13,21 @@ def load_data():
 
 df = load_data()
 
-# 页面样式（蓝色主题 + 字号放大 + 极简设计）
+# 页面样式：蓝色主题 + 大字号 + 侧边栏样式优化
 page_style = """
 <style>
     body {
-        background-color: #e3f2fd;  /* 浅蓝背景 */
+        background-color: #e3f2fd;
     }
     .title-large {
-        font-size: 48px;  /* 页面标题扩大2倍 */
+        font-size: 48px;
         font-weight: bold;
         text-align: center;
         color: #01579b;
         margin-bottom: 40px;
     }
     .main-title {
-        font-size: 130px;  /* MarineTox Predictor 扩大5倍 */
+        font-size: 80px;
         font-weight: bold;
         text-align: center;
         color: #01579b;
@@ -40,13 +40,30 @@ page_style = """
         margin-bottom: 30px;
     }
     .contact-box {
-        font-size: 18px;
+        font-size: 25px;
         text-align: center;
         color: white;
         background-color: #01579b;
         padding: 15px;
         border-radius: 10px;
         margin-top: 30px;
+    }
+
+    /* 👇 侧边栏样式优化 👇 */
+    section[data-testid="stSidebar"] * {
+        font-size: 24px !important;
+        font-weight: bold !important;
+        color: #01579b !important;
+    }
+    section[data-testid="stSidebar"] h3 {
+        font-size: 30px !important;
+        font-weight: bold;
+    }
+    section[data-testid="stSidebar"] input,
+    section[data-testid="stSidebar"] select {
+        height: 50px !important;
+        font-size: 22px !important;
+        padding: 10px !important;
     }
 </style>
 """
@@ -55,7 +72,7 @@ st.markdown(page_style, unsafe_allow_html=True)
 # 页面导航（无图标）
 page = st.sidebar.radio("", ["Home", "Data Filters"])
 
-# ========================== 1️⃣ HOME ==========================
+# ========================== HOME 页面 ==========================
 if page == "Home":
     st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
     st.markdown('<div class="description-box">ChemMarineTox, a multi-task deep learning model for end-to-end prediction of chemical toxicity on 18 marine organisms and five freshwater organisms.</div>', unsafe_allow_html=True)
@@ -67,11 +84,11 @@ if page == "Home":
         </div>
     """, unsafe_allow_html=True)
 
-# ========================== 2️⃣ DATA FILTERS ==========================
+# ========================== DATA FILTERS 页面 ==========================
 elif page == "Data Filters":
     st.markdown('<div class="title-large">Search or Upload CAS for Batch Toxicity Data</div>', unsafe_allow_html=True)
 
-    # --------- 显示表头 ----------
+    # --------- 表头展示 ----------
     st.subheader("Dataset Column Preview")
     st.dataframe(pd.DataFrame(columns=df.columns.tolist()), height=100)
 
@@ -114,17 +131,14 @@ elif page == "Data Filters":
                     st.write("Matching results:")
                     st.dataframe(matched_df, height=500)
 
-                    # 显示未匹配项
                     unmatched = sorted(set(cas_list) - set(matched_df["CAS"].astype(str)))
                     if unmatched:
                         st.warning("The following CAS numbers were not found:")
                         st.code(", ".join(unmatched))
 
-                    # 下载匹配结果
                     download_csv = matched_df.to_csv(index=False).encode("utf-8")
                     st.download_button("Download Batch Search Result", data=download_csv, file_name="batch_search_result.csv", mime="text/csv")
                 else:
                     st.error("None of the uploaded CAS numbers were found.")
-
         except Exception as e:
             st.error(f"Failed to process the uploaded file: {e}")
