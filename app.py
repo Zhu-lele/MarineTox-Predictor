@@ -65,6 +65,13 @@ page_style = """
         font-size: 22px !important;
         padding: 10px !important;
     }
+    /* 当前选中的下拉项样式（例如：Name） */
+    section[data-testid="stSidebar"] div[data-baseweb="select"] div {
+    font-size: 18px !important;
+    font-weight: bold !important;
+    color: #01579b !important;
+    }
+
 </style>
 """
 st.markdown(page_style, unsafe_allow_html=True)
