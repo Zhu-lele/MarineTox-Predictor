@@ -56,12 +56,12 @@ page_style = """
         color: #01579b !important;
     }
     section[data-testid="stSidebar"] h3 {
-        font-size: 30px !important;
+        font-size: 24px !important;
         font-weight: bold;
     }
     section[data-testid="stSidebar"] input,
     section[data-testid="stSidebar"] select {
-        height: 50px !important;
+        height: 24px !important;
         font-size: 22px !important;
         padding: 10px !important;
     }
