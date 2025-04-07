@@ -67,16 +67,15 @@ page_style = """
     }
     /* 当前选中的下拉项样式（例如：Name） */
     section[data-testid="stSidebar"] div[data-baseweb="select"] div {
-    font-size: 18px !important;
-    font-weight: bold !important;
-    color: #01579b !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        color: #01579b !important;
     }
-
 </style>
 """
 st.markdown(page_style, unsafe_allow_html=True)
 
-# 页面导航（无图标）
+# 页面导航
 page = st.sidebar.radio("", ["Home", "Data Filters"])
 
 # ========================== HOME 页面 ==========================
@@ -95,13 +94,13 @@ if page == "Home":
 elif page == "Data Filters":
     st.markdown('<div class="title-large">Search or Upload CAS for Batch Toxicity Data</div>', unsafe_allow_html=True)
 
-    # --------- 表头展示 ----------
-    st.subheader("Dataset Column Preview")
-    st.dataframe(pd.DataFrame(columns=df.columns.tolist()), height=100)
+    # ❌ 已删除 Dataset Column Preview
+    # st.subheader("Dataset Column Preview")
+    # st.dataframe(pd.DataFrame(columns=df.columns.tolist()), height=100)
 
     # --------- 单项查找 ----------
     with st.sidebar:
-        st.markdown("### Single Entry Search")
+        # ❌ 已删除 "Single Entry Search"
         search_column = st.selectbox("Select search column", ["CAS", "Name", "SMILES"])
         search_value = st.text_input(f"Enter {search_column}")
         dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
