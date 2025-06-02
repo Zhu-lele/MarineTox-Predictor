@@ -116,13 +116,13 @@ elif page == "Data Filters":
 
                     # LC50 / EC50
                     st.markdown("**🔸 LC50 / EC50 Values**")
-                    lc50_ec50_cols = df.columns[3:24].tolist()
+                    lc50_ec50_cols = df.columns[3:23].tolist()
                     for col in lc50_ec50_cols:
                         st.write(f"**{col}:** {row[col]}")
 
                     # NOEC
                     st.markdown("**🔸 NOEC Values**")
-                    noec_cols = df.columns[24:27].tolist()
+                    noec_cols = df.columns[23:27].tolist()
                     for col in noec_cols:
                         st.write(f"**{col}:** {row[col]}")
 
