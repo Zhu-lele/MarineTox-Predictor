@@ -122,7 +122,7 @@ elif page == "Data Filters":
 
                     # NOEC
                     st.markdown("**🔸 NOEC Values**")
-                    noec_cols = df.columns[24:28].tolist()
+                    noec_cols = df.columns[24:27].tolist()
                     for col in noec_cols:
                         st.write(f"**{col}:** {row[col]}")
 
