@@ -95,7 +95,7 @@ elif page == "Data Filters":
 
     with st.sidebar:
         search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
-        search_value = st.text_input(f"Enter exact {search_column} value")
+        search_value = st.text_input(f"Enter exact {search_column}")
         dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
         selected_value = search_value.strip() if search_value else dropdown_value
 
