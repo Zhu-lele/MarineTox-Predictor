@@ -112,7 +112,7 @@ elif page == "Data Filters":
 
                 with col2:
                     st.subheader("Marine Ecotoxicity Data")
-                    ecotox_cols = df.columns[3:24].tolist() + df.columns[24:28].tolist()
+                    ecotox_cols = df.columns[3:24].tolist() + df.columns[24:27].tolist()
                     for col in ecotox_cols:
                         st.write(f"**{col}:** {row[col]}")
 
