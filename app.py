@@ -57,8 +57,16 @@ page_style = """
         font-weight: bold !important;
         color: #01579b !important;
     }
+
+    /* ✅ 下拉菜单字体大小优化，防止文字显示不全 */
+    div[data-baseweb="select"] > div {
+        font-size: 18px !important;
+        line-height: 1.2em !important;
+        min-height: 2em !important;
+    }
 </style>
 """
+
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 页面导航
