@@ -5,14 +5,14 @@ import os
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
-# 加载数据：从本地读取（无需 GitHub 下载）
+# 加载本地数据文件
 @st.cache_data
 def load_data():
     file_path = "chemical hazard databaset-20241231V2.csv"
     if os.path.exists(file_path):
         return pd.read_csv(file_path)
     else:
-        st.error("❌ 数据文件未找到，请确保 `chemical hazard databaset-20241231V2.csv` 存在于项目根目录")
+        st.error("❌ 数据文件未找到，请将 CSV 文件放置于应用根目录")
         return pd.DataFrame()
 
 df = load_data()
@@ -82,12 +82,13 @@ elif page == "Data Filters":
 
     with st.sidebar:
         search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
-        search_value = st.text_input(f"Enter {search_column}")
+        search_value = st.text_input(f"Enter exact {search_column} value")
         dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
         selected_value = search_value.strip() if search_value else dropdown_value
 
     if selected_value:
-        filtered_df = df[df[search_column].astype(str).str.contains(selected_value, case=False, na=False)]
+        # 精准匹配（不区分大小写，去除空格）
+        filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
 
         if not filtered_df.empty:
             st.write(f"🔍 Showing results for **{search_column}**: `{selected_value}`")
@@ -95,25 +96,22 @@ elif page == "Data Filters":
             for i, row in filtered_df.iterrows():
                 col1, col2, col3 = st.columns(3)
 
-                # --- Chemical Information ---
                 with col1:
                     st.subheader("Chemical Information")
                     st.write(f"**Chemical Name:** {row['Chemical name']}")
                     st.write(f"**SMILES:** {row['SMILES']}")
                     st.write(f"**Molecular Formula:** {row['Molecular formula']}")
 
-                # --- Marine Ecotoxicity Data ---
                 with col2:
                     st.subheader("Marine Ecotoxicity Data")
                     ecotox_cols = df.columns[3:24].tolist() + df.columns[24:28].tolist()
                     for col in ecotox_cols:
                         st.write(f"**{col}:** {row[col]}")
 
-                # --- SSD Curve ---
                 with col3:
                     st.subheader("SSD Curve")
                     ssd_cols = df.columns[27:32].tolist()
                     for col in ssd_cols:
                         st.write(f"**{col}:** {row[col]}")
         else:
-            st.warning(f"No match found for `{selected_value}` in `{search_column}`.")
+            st.warning(f"No exact match found for `{selected_value}` in `{search_column}`.")
