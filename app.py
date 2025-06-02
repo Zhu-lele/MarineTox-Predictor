@@ -75,7 +75,7 @@ page = st.sidebar.radio("", ["Home", "Data Filters"])
 # ========================== HOME 页面 ==========================
 if page == "Home":
     st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdown('<div class="description-box">MarineTox Predictor enables end-to-end toxicity predictions of 29 subtasks for chemical toxicity on 19 marine organisms and five freshwater organisms spanning algae, crustaceans, invertebrates, molluscs and fish simultaneously.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="description-box">MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms and five freshwater organisms spanning algae, crustaceans, invertebrates, molluscs and fish simultaneously.</div>', unsafe_allow_html=True)
     st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.jpg", use_container_width=True)
     st.markdown("""
         <div class="contact-box">
