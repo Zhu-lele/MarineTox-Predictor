@@ -7,7 +7,7 @@ st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 # 加载数据
 @st.cache_data
 def load_data():
-    file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/Chemical-hazard-database-20250314V2.csv"
+    file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/Chemical-hazard-database-20241231V2.csv"
     return pd.read_csv(file_url)
 
 df = load_data()
