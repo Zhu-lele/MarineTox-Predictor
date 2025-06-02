@@ -85,7 +85,7 @@ if page == "Home":
 
 # ========================== DATA FILTERS 页面 ==========================
 elif page == "Data Filters":
-    st.markdown('<div class="title-large">Search Chemical Toxicity Data</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-large">Search Chemical Hazard Data</div>', unsafe_allow_html=True)
 
     with st.sidebar:
         search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
