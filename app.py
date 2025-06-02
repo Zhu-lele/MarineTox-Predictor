@@ -66,7 +66,6 @@ page_style = """
     }
 </style>
 """
-
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 页面导航
@@ -104,18 +103,30 @@ elif page == "Data Filters":
             for i, row in filtered_df.iterrows():
                 col1, col2, col3 = st.columns(3)
 
+                # --- 化学信息区块 ---
                 with col1:
                     st.subheader("Chemical Information")
                     st.write(f"**Chemical Name:** {row['Chemical name']}")
                     st.write(f"**SMILES:** {row['SMILES']}")
                     st.write(f"**Molecular Formula:** {row['Molecular formula']}")
 
+                # --- Marine Ecotoxicity Data ---
                 with col2:
-                    st.subheader("Marine Ecotoxicity Data [log (μg/L]")
-                    ecotox_cols = df.columns[3:24].tolist() + df.columns[24:27].tolist()
-                    for col in ecotox_cols:
+                    st.subheader("Marine Ecotoxicity Data [log (μg/L)]")
+
+                    # LC50 / EC50
+                    st.markdown("**🔸 LC50 / EC50 Values**")
+                    lc50_ec50_cols = df.columns[3:24].tolist()
+                    for col in lc50_ec50_cols:
                         st.write(f"**{col}:** {row[col]}")
 
+                    # NOEC
+                    st.markdown("**🔸 NOEC Values**")
+                    noec_cols = df.columns[24:28].tolist()
+                    for col in noec_cols:
+                        st.write(f"**{col}:** {row[col]}")
+
+                # --- SSD Curve 信息区块 ---
                 with col3:
                     st.subheader("SSD Curve (log-normal distribution)")
                     ssd_cols = df.columns[27:32].tolist()
