@@ -74,7 +74,7 @@ page = st.sidebar.radio("", ["Home", "Data Filters"])
 # ========================== HOME 页面 ==========================
 if page == "Home":
     st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdown('<div class="description-box">MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms and five freshwater organisms spanning algae, crustaceans, invertebrates, molluscs and fish simultaneously.</div>', unsafe_allow_html=True)
+    st.markdown('<div class="description-box">MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms spanning algae, crustaceans, invertebrates, molluscs and fish simultaneously.</div>', unsafe_allow_html=True)
     st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.jpg", use_container_width=True)
     st.markdown("""
         <div class="contact-box">
@@ -85,7 +85,13 @@ if page == "Home":
 
 # ========================== DATA FILTERS 页面 ==========================
 elif page == "Data Filters":
-    st.markdown('<div class="title-large">Search Chemical Hazard Data</div>', unsafe_allow_html=True)
+    st.markdown("""
+<div class="title-large">
+    <strong>MarineTox Predictor</strong><br>
+    <span style="font-size: 32px;">Search Chemical Hazard Data</span>
+</div>
+""", unsafe_allow_html=True)
+
 
     with st.sidebar:
         search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
