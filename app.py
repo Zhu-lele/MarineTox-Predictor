@@ -111,13 +111,13 @@ elif page == "Data Filters":
                     st.write(f"**Molecular Formula:** {row['Molecular formula']}")
 
                 with col2:
-                    st.subheader("Marine Ecotoxicity Data")
+                    st.subheader("Marine Ecotoxicity Data [log (μg/L]")
                     ecotox_cols = df.columns[3:24].tolist() + df.columns[24:27].tolist()
                     for col in ecotox_cols:
                         st.write(f"**{col}:** {row[col]}")
 
                 with col3:
-                    st.subheader("SSD Curve")
+                    st.subheader("SSD Curve (log-normal distribution)")
                     ssd_cols = df.columns[27:32].tolist()
                     for col in ssd_cols:
                         st.write(f"**{col}:** {row[col]}")
