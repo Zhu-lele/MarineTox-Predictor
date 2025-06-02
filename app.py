@@ -1,14 +1,19 @@
 import streamlit as st
 import pandas as pd
+import os
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
-# 加载数据
+# 加载数据：从本地读取（无需 GitHub 下载）
 @st.cache_data
 def load_data():
-    file_url = "https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/Chemical-hazard-database-20241231V2.csv"
-    return pd.read_csv(file_url)
+    file_path = "chemical hazard databaset-20241231V2.csv"
+    if os.path.exists(file_path):
+        return pd.read_csv(file_path)
+    else:
+        st.error("❌ 数据文件未找到，请确保 `chemical hazard databaset-20241231V2.csv` 存在于项目根目录")
+        return pd.DataFrame()
 
 df = load_data()
 
@@ -75,7 +80,6 @@ if page == "Home":
 elif page == "Data Filters":
     st.markdown('<div class="title-large">Search Chemical Toxicity Data</div>', unsafe_allow_html=True)
 
-    # --------- 修改后的搜索功能（无 CAS） ----------
     with st.sidebar:
         search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
         search_value = st.text_input(f"Enter {search_column}")
@@ -86,7 +90,7 @@ elif page == "Data Filters":
         filtered_df = df[df[search_column].astype(str).str.contains(selected_value, case=False, na=False)]
 
         if not filtered_df.empty:
-            st.write(f"Showing results for **{search_column}**: `{selected_value}`")
+            st.write(f"🔍 Showing results for **{search_column}**: `{selected_value}`")
 
             for i, row in filtered_df.iterrows():
                 col1, col2, col3 = st.columns(3)
