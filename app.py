@@ -103,8 +103,8 @@ elif page == "Data Filters":
         # 精准匹配（不区分大小写，去除空格）
         filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
 
-        #if not filtered_df.empty:
-            #st.write(f"🔍 Showing results for **{search_column}**: `{selected_value}`")
+        if not filtered_df.empty:
+            
 
             for i, row in filtered_df.iterrows():
                 col1, col2, col3 = st.columns(3)
