@@ -103,8 +103,8 @@ elif page == "Data Filters":
         # 精准匹配（不区分大小写，去除空格）
         filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
 
-        if not filtered_df.empty:
-            st.write(f"🔍 Showing results for **{search_column}**: `{selected_value}`")
+        #if not filtered_df.empty:
+            #st.write(f"🔍 Showing results for **{search_column}**: `{selected_value}`")
 
             for i, row in filtered_df.iterrows():
                 col1, col2, col3 = st.columns(3)
@@ -118,7 +118,7 @@ elif page == "Data Filters":
 
                 # --- Marine Ecotoxicity Data ---
                 with col2:
-                    st.subheader("Marine Ecotoxicity Data [log (μg/L)]")
+                    st.subheader("Marine Ecotoxicity Data [log (mg/L)]")
 
                     # LC50 / EC50
                     st.markdown("**🔸 LC50 / EC50 Values**")
