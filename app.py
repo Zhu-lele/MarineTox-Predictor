@@ -4,21 +4,22 @@ import os
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
-# 加载本地数据文件（Excel 格式）
+# 加载本地 Excel 数据文件
 @st.cache_data
 def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20241231V3.xlsx")
 
     if os.path.exists(file_path):
         try:
-            # 读取 Excel 文件
-            return pd.read_excel(file_path)
+            # 显式指定 openpyxl 引擎
+            return pd.read_excel(file_path, engine="openpyxl")
         except Exception as e:
             st.error(f"❌ Excel 文件读取失败：{str(e)}")
             return pd.DataFrame()
     else:
         st.error("❌ 数据文件未找到，请将 Excel 文件放置于应用根目录")
         return pd.DataFrame()
+
 
 
 
