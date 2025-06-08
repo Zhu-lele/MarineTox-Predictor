@@ -8,7 +8,7 @@ st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 # 加载本地数据文件
 @st.cache_data
 def load_data():
-    file_path = "chemical hazard databaset-20241231V2.csv"
+    file_path = "chemical hazard databaset-20241231.csv"
     if os.path.exists(file_path):
         return pd.read_csv(file_path)
     else:
