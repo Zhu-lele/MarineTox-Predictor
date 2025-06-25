@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import os
 
-# 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
 @st.cache_data
@@ -20,92 +19,98 @@ def load_data():
 
 df = load_data()
 
-# 页面样式
-page_style = """
+# === 改造版 CSS 样式 ===
+custom_style = """
 <style>
+/* 全局背景 */
 body {
-    background-color: #e3f2fd;
+    background-color: #f4f7fa;
 }
-h1, h2, h3, h4 {
-    color: #01579b;
-}
-.stButton > button {
-    background-color: #01579b;
-    color: white;
-    border-radius: 8px;
-    padding: 0.5em 1em;
-    font-size: 18px;
-}
-.stButton > button:hover {
-    background-color: #003f6b;
-}
-.stTextInput > div > input {
-    border: 2px solid #01579b;
-    border-radius: 5px;
-    font-size: 16px;
-}
-div[data-baseweb="select"] > div {
-    font-size: 16px;
-    border: 2px solid #01579b;
-    border-radius: 5px;
-    min-height: 2.5em;
-}
-section[data-testid="stSidebar"] * {
-    font-size: 20px !important;
-    font-weight: bold !important;
-    color: #01579b !important;
-}
-.card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.title-large {
-    font-size: 60px;
+
+/* 标题样式 */
+h1, h2, h3 {
+    color: #003366;
     font-weight: bold;
+}
+.title-main {
+    font-size: 48px;
     text-align: center;
-    color: #01579b;
-    margin-bottom: 30px;
+    color: #003366;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 .subtitle {
-    font-size: 28px;
-    text-align: center;
-    color: #01579b;
-    margin-bottom: 30px;
-}
-.contact-box {
     font-size: 20px;
     text-align: center;
+    color: #336699;
+    margin-bottom: 30px;
+}
+
+/* 侧边栏 */
+section[data-testid="stSidebar"] {
+    background-color: #e3ecf3;
+}
+section[data-testid="stSidebar"] * {
+    font-size: 16px;
+    color: #003366;
+}
+.stRadio > label {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 搜索框、下拉菜单 */
+.stTextInput > div > input, div[data-baseweb="select"] > div {
+    border: 1.5px solid #003366;
+    border-radius: 4px;
+    font-size: 16px;
+    min-height: 2.2em;
+}
+.stButton > button {
+    background-color: #003366;
     color: white;
-    background-color: #01579b;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 30px;
+    border-radius: 4px;
+    padding: 0.4em 1em;
+}
+.stButton > button:hover {
+    background-color: #001d3d;
+}
+
+/* 结果卡片 */
+.result-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+}
+.result-title {
+    font-size: 22px;
+    color: #003366;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.data-label {
+    font-weight: bold;
+    color: #003366;
 }
 </style>
 """
-st.markdown(page_style, unsafe_allow_html=True)
+st.markdown(custom_style, unsafe_allow_html=True)
 
-# 页面导航
+# === 页面导航 ===
 page = st.sidebar.radio("", ["Home", "Data Filters"])
 
-# ------------------ HOME 页面 ------------------
+# === HOME 页面 ===
 if page == "Home":
-    st.markdown('<div class="title-large">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">End-to-end toxicity predictions for marine organisms</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-main">MarineTox Predictor</div>', unsafe_allow_html=True)
+    st.markdown('<div class="subtitle">Marine Ecotoxicity Hazard Database & End-to-End Toxicity Prediction Tool</div>', unsafe_allow_html=True)
     st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.jpg", use_container_width=True)
-    st.markdown("""
-        <div class="contact-box">
-            School of Environmental Science and Technology, Dalian University of Technology, China<br>
-            Contact: <b>Zhu_lll@163.com</b>
-        </div>
-    """, unsafe_allow_html=True)
+    st.info("Developed by: School of Environmental Science and Technology, Dalian University of Technology, China | Contact: Zhu_lll@163.com")
 
-# ------------------ DATA FILTERS 页面 ------------------
+# === DATA FILTERS 页面 ===
 elif page == "Data Filters":
-    st.markdown('<div class="title-large">MarineTox Predictor</div>', unsafe_allow_html=True)
+    st.markdown('<div class="title-main">MarineTox Predictor</div>', unsafe_allow_html=True)
     st.markdown('<div class="subtitle">Search Chemical Hazard Data</div>', unsafe_allow_html=True)
 
     with st.sidebar:
@@ -117,32 +122,31 @@ elif page == "Data Filters":
     if selected_value:
         filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
         if not filtered_df.empty:
-            for i, row in filtered_df.iterrows():
-                
-                st.markdown('<div class="card">', unsafe_allow_html=True)
+            for _, row in filtered_df.iterrows():
+                st.markdown('<div class="result-card">', unsafe_allow_html=True)
+
                 col1, col2, col3 = st.columns(3)
 
                 with col1:
-                    st.subheader("Chemical Information")
+                    st.markdown('<div class="result-title">Chemical Information</div>', unsafe_allow_html=True)
                     st.write(f"**Name:** {row['Chemical name']}")
                     st.write(f"**SMILES:** {row['SMILES']}")
                     st.write(f"**Formula:** {row['Molecular formula']}")
 
                 with col2:
-                    st.subheader("Marine Ecotoxicity [log (mg/L)]")
-                    st.markdown("**LC50 / EC50 Values**")
+                    st.markdown('<div class="result-title">Marine Ecotoxicity [log (mg/L)]</div>', unsafe_allow_html=True)
+                    st.write("**LC50 / EC50 Values**")
                     for col in df.columns[3:23]:
-                        st.write(f"**{col}:** {row[col]}")
-                    st.markdown("**NOEC Values**")
+                        st.write(f"{col}: {row[col]}")
+                    st.write("**NOEC Values**")
                     for col in df.columns[23:27]:
-                        st.write(f"**{col}:** {row[col]}")
+                        st.write(f"{col}: {row[col]}")
 
                 with col3:
-                    st.subheader("SSD Curve (log-normal)")
+                    st.markdown('<div class="result-title">SSD Curve (log-normal)</div>', unsafe_allow_html=True)
                     for col in df.columns[27:32]:
-                        st.write(f"**{col}:** {row[col]}")
-                
-                st.markdown('</div>', unsafe_allow_html=True)
+                        st.write(f"{col}: {row[col]}")
 
+                st.markdown('</div>', unsafe_allow_html=True)
         else:
             st.warning(f"No exact match found for `{selected_value}` in `{search_column}`.")
