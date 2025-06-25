@@ -1,9 +1,12 @@
 import streamlit as st
 import pandas as pd
+import re
 import os
 
-st.set_page_config(page_title="MarineTox Predictor", layout="wide")
+# ---------------- 页面基础配置 ----------------
+st.set_page_config(page_title="MarineTox Chatbot", layout="centered")
 
+# ---------------- 加载本地数据 ----------------
 @st.cache_data
 def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20241231.xlsx")
@@ -19,134 +22,79 @@ def load_data():
 
 df = load_data()
 
-# === 改造版 CSS 样式 ===
-custom_style = """
+# ---------------- 初始化对话记录 ----------------
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
+
+# ---------------- 样式美化 ----------------
+st.markdown("""
 <style>
-/* 全局背景 */
-body {
-    background-color: #f4f7fa;
-}
-
-/* 标题样式 */
-h1, h2, h3 {
-    color: #003366;
-    font-weight: bold;
-}
-.title-main {
-    font-size: 48px;
-    text-align: center;
-    color: #003366;
-    margin-top: 20px;
+.chat-bubble-user {
+    background-color: #e3f2fd;
+    padding: 10px;
+    border-radius: 10px;
     margin-bottom: 10px;
 }
-.subtitle {
-    font-size: 20px;
-    text-align: center;
-    color: #336699;
-    margin-bottom: 30px;
-}
-
-/* 侧边栏 */
-section[data-testid="stSidebar"] {
-    background-color: #e3ecf3;
-}
-section[data-testid="stSidebar"] * {
-    font-size: 16px;
-    color: #003366;
-}
-.stRadio > label {
-    font-size: 18px;
-    font-weight: bold;
-}
-
-/* 搜索框、下拉菜单 */
-.stTextInput > div > input, div[data-baseweb="select"] > div {
-    border: 1.5px solid #003366;
-    border-radius: 4px;
-    font-size: 16px;
-    min-height: 2.2em;
-}
-.stButton > button {
-    background-color: #003366;
+.chat-bubble-bot {
+    background-color: #01579b;
     color: white;
-    border-radius: 4px;
-    padding: 0.4em 1em;
-}
-.stButton > button:hover {
-    background-color: #001d3d;
-}
-
-/* 结果卡片 */
-.result-card {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-}
-.result-title {
-    font-size: 22px;
-    color: #003366;
-    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
     margin-bottom: 10px;
-}
-.data-label {
-    font-weight: bold;
-    color: #003366;
 }
 </style>
+""", unsafe_allow_html=True)
+
+# ---------------- 关键词提取函数 ----------------
+def extract_chemical_name(text):
+    """尝试提取化学品名称"""
+    for name in df["Chemical name"].dropna().astype(str).tolist():
+        if name.lower() in text.lower():
+            return name
+    return None
+
+# ---------------- 聊天对话展示 ----------------
+st.title("💬 MarineTox Predictor - Chatbot风格智能数据库")
+
+st.info("请您用自然语言提问，例如：'请告诉我 amyl nitrite 的毒性数据'，系统会自动返回信息。")
+
+for chat in st.session_state.chat_history:
+    if chat["role"] == "user":
+        st.markdown(f'<div class="chat-bubble-user">🧑 {chat["content"]}</div>', unsafe_allow_html=True)
+    else:
+        st.markdown(f'<div class="chat-bubble-bot">🤖 {chat["content"]}</div>', unsafe_allow_html=True)
+
+# ---------------- 用户输入区 ----------------
+user_input = st.text_input("请输入您的问题:")
+
+if st.button("发送") and user_input:
+    st.session_state.chat_history.append({"role": "user", "content": user_input})
+    
+    chem_name = extract_chemical_name(user_input)
+    
+    if chem_name:
+        row = df[df["Chemical name"].astype(str).str.lower() == chem_name.lower()].iloc[0]
+        
+        reply = f"""
+<b>Chemical Name:</b> {row['Chemical name']}  
+<b>SMILES:</b> {row['SMILES']}  
+<b>Molecular Formula:</b> {row['Molecular formula']}  
+
+<b>🔸 LC50 / EC50 Values:</b>  
 """
-st.markdown(custom_style, unsafe_allow_html=True)
+        for col in df.columns[3:23]:
+            reply += f"{col}: {row[col]}  \n"
+        
+        reply += "\n<b>🔸 NOEC Values:</b>\n"
+        for col in df.columns[23:27]:
+            reply += f"{col}: {row[col]}  \n"
+        
+        reply += "\n<b>🔸 SSD Curve:</b>\n"
+        for col in df.columns[27:32]:
+            reply += f"{col}: {row[col]}  \n"
 
-# === 页面导航 ===
-page = st.sidebar.radio("", ["Home", "Data Filters"])
-
-# === HOME 页面 ===
-if page == "Home":
-    st.markdown('<div class="title-main">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Marine Ecotoxicity Hazard Database & End-to-End Toxicity Prediction Tool</div>', unsafe_allow_html=True)
-    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.jpg", use_container_width=True)
-    st.info("Developed by: School of Environmental Science and Technology, Dalian University of Technology, China | Contact: Zhu_lll@163.com")
-
-# === DATA FILTERS 页面 ===
-elif page == "Data Filters":
-    st.markdown('<div class="title-main">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdown('<div class="subtitle">Search Chemical Hazard Data</div>', unsafe_allow_html=True)
-
-    with st.sidebar:
-        search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
-        search_value = st.text_input(f"Enter exact {search_column}")
-        dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
-        selected_value = search_value.strip() if search_value else dropdown_value
-
-    if selected_value:
-        filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
-        if not filtered_df.empty:
-            for _, row in filtered_df.iterrows():
-                st.markdown('<div class="result-card">', unsafe_allow_html=True)
-
-                col1, col2, col3 = st.columns(3)
-
-                with col1:
-                    st.markdown('<div class="result-title">Chemical Information</div>', unsafe_allow_html=True)
-                    st.write(f"**Name:** {row['Chemical name']}")
-                    st.write(f"**SMILES:** {row['SMILES']}")
-                    st.write(f"**Formula:** {row['Molecular formula']}")
-
-                with col2:
-                    st.markdown('<div class="result-title">Marine Ecotoxicity [log (mg/L)]</div>', unsafe_allow_html=True)
-                    st.write("**LC50 / EC50 Values**")
-                    for col in df.columns[3:23]:
-                        st.write(f"{col}: {row[col]}")
-                    st.write("**NOEC Values**")
-                    for col in df.columns[23:27]:
-                        st.write(f"{col}: {row[col]}")
-
-                with col3:
-                    st.markdown('<div class="result-title">SSD Curve (log-normal)</div>', unsafe_allow_html=True)
-                    for col in df.columns[27:32]:
-                        st.write(f"{col}: {row[col]}")
-
-                st.markdown('</div>', unsafe_allow_html=True)
-        else:
-            st.warning(f"No exact match found for `{selected_value}` in `{search_column}`.")
+        st.session_state.chat_history.append({"role": "bot", "content": reply})
+    else:
+        st.session_state.chat_history.append({"role": "bot", "content": "很抱歉，未能识别出您提问中的化学品名称，请确保输入正确的化学品名称。"})
+    
+    st.experimental_rerun()
