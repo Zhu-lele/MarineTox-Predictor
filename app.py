@@ -1,12 +1,11 @@
 import streamlit as st
 import pandas as pd
-import re
 import os
 
-# ---------------- 页面基础配置 ----------------
+# ---------------- 页面配置 ----------------
 st.set_page_config(page_title="MarineTox Chatbot", layout="centered")
 
-# ---------------- 加载本地数据 ----------------
+# ---------------- 数据加载 ----------------
 @st.cache_data
 def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20241231.xlsx")
@@ -26,7 +25,7 @@ df = load_data()
 if "chat_history" not in st.session_state:
     st.session_state.chat_history = []
 
-# ---------------- 样式美化 ----------------
+# ---------------- 页面美化 ----------------
 st.markdown("""
 <style>
 .chat-bubble-user {
@@ -45,31 +44,32 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------- 关键词提取函数 ----------------
+# ---------------- 模糊匹配关键词提取 ----------------
 def extract_chemical_name(text):
-    """尝试提取化学品名称"""
+    """模糊匹配：输入中模糊包含化学品名称即返回"""
+    clean_text = text.lower().strip()
     for name in df["Chemical name"].dropna().astype(str).tolist():
-        if name.lower() in text.lower():
+        if name.lower().strip() in clean_text:
             return name
     return None
 
-# ---------------- 聊天对话展示 ----------------
+# ---------------- 页面主体 ----------------
 st.title("💬 MarineTox Predictor - Chatbot风格智能数据库")
+st.info("请用自然语言提问，例如：'请告诉我 amyl nitrite 的毒性数据'，系统会自动返回信息。")
 
-st.info("请您用自然语言提问，例如：'请告诉我 amyl nitrite 的毒性数据'，系统会自动返回信息。")
-
+# 展示历史对话
 for chat in st.session_state.chat_history:
     if chat["role"] == "user":
         st.markdown(f'<div class="chat-bubble-user">🧑 {chat["content"]}</div>', unsafe_allow_html=True)
     else:
         st.markdown(f'<div class="chat-bubble-bot">🤖 {chat["content"]}</div>', unsafe_allow_html=True)
 
-# ---------------- 用户输入区 ----------------
+# 输入区
 with st.form("chat_form"):
     user_input = st.text_input("请输入您的问题:")
     submitted = st.form_submit_button("发送")
 
-# ---------------- 处理输入逻辑 ----------------
+# 处理输入
 if submitted and user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
     
