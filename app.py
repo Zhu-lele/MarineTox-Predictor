@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import os
 
-# ---------------- 页面配置 ----------------
+# ---------------- 页面基础配置 ----------------
 st.set_page_config(page_title="MarineTox Chatbot", layout="centered")
 
 # ---------------- 数据加载 ----------------
@@ -33,6 +33,8 @@ st.markdown("""
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    max-width: 80%;
+    margin-left: auto;
 }
 .chat-bubble-bot {
     background-color: #01579b;
@@ -40,6 +42,8 @@ st.markdown("""
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 10px;
+    max-width: 80%;
+    margin-right: auto;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -99,3 +103,6 @@ if submitted and user_input:
         st.session_state.chat_history.append({"role": "bot", "content": reply})
     else:
         st.session_state.chat_history.append({"role": "bot", "content": "很抱歉，未能识别出您提问中的化学品名称，请确保输入正确的化学品名称。"})
+
+    # 页面刷新以显示新对话
+    st.experimental_rerun()
