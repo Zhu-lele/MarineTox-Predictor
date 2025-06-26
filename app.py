@@ -3,7 +3,7 @@ import pandas as pd
 import os
 
 # 页面配置
-st.set_page_config(page_title="MarineTox Predictor", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
 # 加载本地 Excel 数据文件
 @st.cache_data
@@ -12,6 +12,7 @@ def load_data():
 
     if os.path.exists(file_path):
         try:
+            # 显式指定 openpyxl 引擎
             return pd.read_excel(file_path, engine="openpyxl")
         except Exception as e:
             st.error(f"❌ Excel 文件读取失败：{str(e)}")
@@ -48,11 +49,12 @@ page_style = """
         color: #01579b;
         margin-bottom: 30px;
     }
+    /* Data Search 按钮样式 */
     .data-search-button {
         display: block;
         background-color: #01579b;
         color: white;
-        font-size: 24px;
+        font-size: 30px;
         font-weight: bold;
         padding: 20px 50px;
         border-radius: 10px;
@@ -63,7 +65,8 @@ page_style = """
     .data-search-button:hover {
         background-color: #013b6b;
     }
-    /* 样式调整 */
+
+    /* 隐藏侧边栏 */
     section[data-testid="stSidebar"] {
         display: none;
     }
@@ -73,11 +76,16 @@ st.markdown(page_style, unsafe_allow_html=True)
 
 # 页面标题和描述
 st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
-st.markdown('<div class="description-box">MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms spanning algae, crustaceans, invertebrates, mollusks and fish simultaneously.</div>', unsafe_allow_html=True)
+st.markdown("""
+        <div class="description-box">
+            MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms spanning algae, crustaceans, invertebrates, mollusks and fish simultaneously.
+        </div>
+    """, unsafe_allow_html=True)
 
 # Data Search 按钮
 if st.button('Data Search', key="data_search", help="Search chemical hazard data"):
-    st.experimental_rerun()
+    # 数据查询功能，暂时只是示例
+    st.write("You can now query chemical data here.")
 
 # 说明部分
 st.markdown("""
