@@ -28,17 +28,20 @@ if "chat_history" not in st.session_state:
 # ---------------- 页面美化 ----------------
 st.markdown("""
 <style>
+/* 设置对话框显示区域样式 */
 .chat-container {
-    max-width: 600px;
+    width: 80%;
+    height: 400px;
     max-height: 400px;
-    overflow-y: auto;
+    overflow-y: scroll;
     margin: 0 auto;
-    padding: 10px;
     background-color: #f5f5f5;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
+/* 设置用户消息气泡样式 */
 .chat-bubble-user {
     background-color: #e3f2fd;
     padding: 10px;
@@ -48,6 +51,7 @@ st.markdown("""
     margin-left: auto;
 }
 
+/* 设置系统回复气泡样式 */
 .chat-bubble-bot {
     background-color: #01579b;
     color: white;
@@ -58,6 +62,7 @@ st.markdown("""
     margin-right: auto;
 }
 
+/* 输入框和按钮样式 */
 input {
     width: 90%;
     padding: 10px;
