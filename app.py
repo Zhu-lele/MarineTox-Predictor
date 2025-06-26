@@ -2,15 +2,16 @@ import streamlit as st
 import pandas as pd
 import os
 
-# ---------------- 页面基础配置 ----------------
+# 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
-
-# ---------------- 数据加载 ----------------
+# 加载本地 Excel 数据文件
 @st.cache_data
 def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20241231.xlsx")
+
     if os.path.exists(file_path):
         try:
+            # 显式指定 openpyxl 引擎
             return pd.read_excel(file_path, engine="openpyxl")
         except Exception as e:
             st.error(f"❌ Excel 文件读取失败：{str(e)}")
@@ -19,72 +20,66 @@ def load_data():
         st.error("❌ 数据文件未找到，请将 Excel 文件放置于应用根目录")
         return pd.DataFrame()
 
+
+
+
 df = load_data()
 
-# ---------------- 页面美化 ----------------
-st.markdown("""
+# 页面样式
+page_style = """
 <style>
-/* 设置页面整体样式 */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-}
+    body {
+        background-color: #e3f2fd;
+    }
+    .title-large {
+        font-size: 48px;
+        font-weight: bold;
+        text-align: center;
+        color: #01579b;
+        margin-bottom: 40px;
+    }
+    .main-title {
+        font-size: 80px;
+        font-weight: bold;
+        text-align: center;
+        color: #01579b;
+        margin-bottom: 50px;
+    }
+    .description-box {
+        font-size: 28px;
+        text-align: center;
+        color: #01579b;
+        margin-bottom: 30px;
+    }
+    .contact-box {
+        font-size: 25px;
+        text-align: center;
+        color: white;
+        background-color: #01579b;
+        padding: 15px;
+        border-radius: 10px;
+        margin-top: 30px;
+    }
+    section[data-testid="stSidebar"] * {
+        font-size: 24px !important;
+        font-weight: bold !important;
+        color: #01579b !important;
+    }
 
-/* 设置标题样式 */
-h1 {
-    color: #01579b;
-    text-align: center;
-    font-size: 36px;
-    margin-bottom: 30px;
-}
-
-/* 设置输入框样式 */
-.stTextInput {
-    margin: 20px auto;
-    width: 60%;
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-}
-
-/* 设置按钮样式 */
-.stButton {
-    background-color: #01579b;
-    color: white;
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-/* 设置表格展示样式 */
-.dataframe {
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 20px;
-}
+    /* ✅ 下拉菜单字体大小优化，防止文字显示不全 */
+    div[data-baseweb="select"] > div {
+        font-size: 18px !important;
+        line-height: 1.2em !important;
+        min-height: 2em !important;
+    }
 </style>
-""", unsafe_allow_html=True)
+"""
+st.markdown(page_style, unsafe_allow_html=True)
 
-# ---------------- 查询功能 ----------------
-st.title("MarineTox Predictor - 查询化学品数据")
+# 页面导航
+page = st.sidebar.radio("", ["Home", "Data Filters"])
 
-# 用户输入化学品名称或SMILES
-query = st.text_input("请输入化学品名称或 SMILES 进行查询:")
-
-# 如果用户输入查询，显示结果
-if query:
-    # 模糊匹配：查询包含输入的化学品名称或SMILES
-    query = query.lower().strip()
-    filtered_df = df[df["Chemical name"].str.lower().str.contains(query) | df["SMILES"].str.lower().str.contains(query)]
-    
-    if not filtered_df.empty:
-        st.dataframe(filtered_df[['Chemical name', 'SMILES', 'Molecular formula', 'LC50_0', 'LC50_1', 'LC50_2']].style.format({
-            'LC50_0': '{:.2f}', 'LC50_1': '{:.2f}', 'LC50_2': '{:.2f}'
-        }))
-    else:
-        st.warning("未找到匹配的化学品，请确保输入正确的名称或SMILES。")
+# ========================== HOME 页面 ==========================
+if page == "Home":
+    st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
+    st.markdow
