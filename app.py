@@ -28,9 +28,9 @@ if "chat_history" not in st.session_state:
 # ---------------- 页面美化 ----------------
 st.markdown("""
 <style>
-/* 设置聊天对话框框区域 */
+/* 固定聊天框在页面底部 */
 .chat-container {
-    width: 80%;
+    width: 100%;
     height: 400px;
     max-height: 400px;
     overflow-y: scroll;
@@ -42,7 +42,7 @@ st.markdown("""
     position: relative;
 }
 
-/* 设置用户消息气泡样式 */
+/* 用户消息气泡样式 */
 .chat-bubble-user {
     background-color: #e3f2fd;
     padding: 10px;
@@ -52,7 +52,7 @@ st.markdown("""
     margin-left: auto;
 }
 
-/* 设置系统回复气泡样式 */
+/* 系统回复气泡样式 */
 .chat-bubble-bot {
     background-color: #01579b;
     color: white;
@@ -63,7 +63,7 @@ st.markdown("""
     margin-right: auto;
 }
 
-/* 输入框样式 */
+/* 输入框和发送按钮样式 */
 input {
     width: 90%;
     padding: 10px;
@@ -79,6 +79,16 @@ button {
     border: none;
     padding: 10px 20px;
     border-radius: 5px;
+}
+
+/* 固定输入框和发送按钮位置在页面底部 */
+.stTextInput, .stButton {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: #fff;
 }
 </style>
 """, unsafe_allow_html=True)
