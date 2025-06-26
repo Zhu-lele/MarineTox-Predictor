@@ -45,6 +45,11 @@ st.markdown("""
     max-width: 80%;
     margin-right: auto;
 }
+.chat-container {
+    max-height: 500px;
+    overflow-y: auto;
+    margin-bottom: 80px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -61,19 +66,21 @@ def extract_chemical_name(text):
 st.title("💬 MarineTox Predictor - Chatbot风格智能数据库")
 st.info("请用自然语言提问，例如：'请告诉我 amyl nitrite 的毒性数据'，系统会自动返回信息。")
 
-# 展示历史对话
+# ---------------- 展示历史对话 ----------------
+st.markdown('<div class="chat-container">', unsafe_allow_html=True)
 for chat in st.session_state.chat_history:
     if chat["role"] == "user":
         st.markdown(f'<div class="chat-bubble-user">🧑 {chat["content"]}</div>', unsafe_allow_html=True)
     else:
         st.markdown(f'<div class="chat-bubble-bot">🤖 {chat["content"]}</div>', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
 
-# 输入区
+# ---------------- 用户输入区 ----------------
 with st.form("chat_form"):
     user_input = st.text_input("请输入您的问题:")
     submitted = st.form_submit_button("发送")
 
-# 处理输入
+# ---------------- 处理输入 ----------------
 if submitted and user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
     
