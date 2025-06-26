@@ -4,6 +4,7 @@ import os
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
+
 # 加载本地 Excel 数据文件
 @st.cache_data
 def load_data():
@@ -19,9 +20,6 @@ def load_data():
     else:
         st.error("❌ 数据文件未找到，请将 Excel 文件放置于应用根目录")
         return pd.DataFrame()
-
-
-
 
 df = load_data()
 
@@ -74,6 +72,7 @@ page_style = """
     }
 </style>
 """
+
 st.markdown(page_style, unsafe_allow_html=True)
 
 # 页面导航
@@ -82,4 +81,70 @@ page = st.sidebar.radio("", ["Home", "Data Filters"])
 # ========================== HOME 页面 ==========================
 if page == "Home":
     st.markdown('<div class="main-title">MarineTox Predictor</div>', unsafe_allow_html=True)
-    st.markdow
+    st.markdown("""
+        <div class="description-box">
+            MarineTox Predictor enables end-to-end toxicity predictions for chemical acute and chronic toxicity on 20 marine organisms spanning algae, crustaceans, invertebrates, mollusks and fish simultaneously.
+        </div>
+    """, unsafe_allow_html=True)
+    st.image("https://raw.githubusercontent.com/Zhu-lele/Chemical-Hazard-Database-for-marine-ecological-risk-assessment/main/model_diagram.jpg", use_container_width=True)
+    st.markdown("""
+        <div class="contact-box">
+            School of Environmental Science and Technology, Dalian University of Technology, China<br>
+            Contact: <b>Zhu_lll@163.com</b>
+        </div>
+    """, unsafe_allow_html=True)
+
+# ========================== DATA FILTERS 页面 ==========================
+elif page == "Data Filters":
+    st.markdown("""
+    <div class="title-large">
+        <strong>MarineTox Predictor</strong><br>
+        <span style="font-size: 32px;">Search Chemical Hazard Data</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    with st.sidebar:
+        search_column = st.selectbox("Select search column", ["Chemical name", "SMILES", "Molecular formula"])
+        search_value = st.text_input(f"Enter exact {search_column}")
+        dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
+        selected_value = search_value.strip() if search_value else dropdown_value
+
+    if selected_value:
+        # 精准匹配（不区分大小写，去除空格）
+        filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
+
+        if not filtered_df.empty:
+            for i, row in filtered_df.iterrows():
+                col1, col2, col3 = st.columns(3)
+
+                # --- 化学信息区块 ---
+                with col1:
+                    st.subheader("Chemical Information")
+                    st.write(f"**Chemical Name:** {row['Chemical name']}")
+                    st.write(f"**SMILES:** {row['SMILES']}")
+                    st.write(f"**Molecular Formula:** {row['Molecular formula']}")
+
+                # --- Marine Ecotoxicity Data ---
+                with col2:
+                    st.subheader("Marine Ecotoxicity Data [log (mg/L)]")
+
+                    # LC50 / EC50
+                    st.markdown("**🔸 LC50 / EC50 Values**")
+                    lc50_ec50_cols = df.columns[3:23].tolist()
+                    for col in lc50_ec50_cols:
+                        st.write(f"**{col}:** {row[col]}")
+
+                    # NOEC
+                    st.markdown("**🔸 NOEC Values**")
+                    noec_cols = df.columns[23:27].tolist()
+                    for col in noec_cols:
+                        st.write(f"**{col}:** {row[col]}")
+
+                # --- SSD Curve 信息区块 ---
+                with col3:
+                    st.subheader("SSD Curve (log-normal distribution)")
+                    ssd_cols = df.columns[27:32].tolist()
+                    for col in ssd_cols:
+                        st.write(f"**{col}:** {row[col]}")
+        else:
+            st.warning(f"No exact match found for `{selected_value}` in `{search_column}`.")
