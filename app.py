@@ -59,7 +59,7 @@ page_style = """
         margin-top: 30px;
     }
     section[data-testid="stSidebar"] * {
-        font-size: 24px !important;
+        font-size: 30px !important;
         font-weight: bold !important;
         color: #01579b !important;
     }
