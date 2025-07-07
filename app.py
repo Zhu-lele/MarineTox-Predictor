@@ -47,7 +47,7 @@ with st.sidebar:
     # Help 按钮
     if st.button("📖 Show Help"):
         try:
-            help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
+            help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/blob/main/Help.txt"
             response = requests.get(help_url)
             if response.status_code == 200:
                 st.markdown("### 📖 Help Information")
