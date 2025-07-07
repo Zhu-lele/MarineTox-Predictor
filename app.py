@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import os
+import requests
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
@@ -44,11 +45,19 @@ with st.sidebar:
     st.markdown("---")
 
     # Help 按钮
-    if st.button("📖 Help"):
-        help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/blob/main/Help%20Files.docx"
-        st.markdown(f'<a href="{help_url}" target="_blank">📂 Click here to open Help file</a>', unsafe_allow_html=True)
+    if st.button("📖 Show Help"):
+        try:
+            help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
+            response = requests.get(help_url)
+            if response.status_code == 200:
+                st.markdown("### 📖 Help Information")
+                st.text(response.text)
+            else:
+                st.warning("Help file not found or failed to load.")
+        except:
+            st.error("Error fetching Help file from GitHub.")
 
-# 主区内容
+# 主区内容（不变）
 if selected_value:
     filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
     
