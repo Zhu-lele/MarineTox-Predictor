@@ -1,8 +1,8 @@
 import streamlit as st
 import pandas as pd
 import os
-from docx import Document
 import requests
+from docx import Document
 from io import BytesIO
 
 # 页面配置
@@ -25,17 +25,17 @@ def load_data():
 # 加载帮助文档
 @st.cache_data
 def load_help_file():
-    help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/blob/main/Help%20Files.docx?raw=true"
+    help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/raw/main/Help%20Files.docx"
     try:
         response = requests.get(help_url)
         doc = Document(BytesIO(response.content))
         help_content = []
         for para in doc.paragraphs:
             help_content.append(para.text)
-        return "\n".join(help_content)
+        return help_content
     except Exception as e:
         st.error(f"❌ 帮助文档加载失败：{str(e)}")
-        return "Help content not available."
+        return ["Help content not available."]
 
 df = load_data()
 help_content = load_help_file()
@@ -50,6 +50,10 @@ page_style = """
     .data-label { font-weight: bold; color: #01579b; }
     section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
     .help-content { background-color: white; padding: 15px; border-radius: 10px; margin-top: 20px; }
+    .help-section { margin-top: 20px; }
+    .help-title { font-size: 24px; font-weight: bold; color: #01579b; margin-bottom: 10px; }
+    .help-text { margin-bottom: 10px; }
+    .help-icon { font-size: 24px; vertical-align: middle; margin-right: 10px; }
 </style>
 """
 
@@ -67,9 +71,20 @@ with st.sidebar:
     selected_value = search_value.strip() if search_value else dropdown_value
     
     # 添加帮助文档部分
-    st.markdown('<div class="section-title">ℹ️ Help Documentation</div>', unsafe_allow_html=True)
-    with st.expander("View Help Content"):
-        st.markdown(f'<div class="help-content">{help_content}</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title help-section">ℹ️ Help Documentation</div>', unsafe_allow_html=True)
+    with st.expander("View Help Content", expanded=False):
+        st.markdown('<div class="help-content">', unsafe_allow_html=True)
+        for paragraph in help_content:
+            if paragraph.strip() and "**" in paragraph:
+                # 处理标题和粗体文本
+                st.markdown(paragraph)
+            elif paragraph.strip() and paragraph.strip().startswith("!"):
+                # 忽略图片引用
+                continue
+            elif paragraph.strip():
+                # 普通段落
+                st.markdown(f'<div class="help-text">{paragraph}</div>', unsafe_allow_html=True)
+        st.markdown('</div>', unsafe_allow_html=True)
 
 # --- 结果展示区 ---
 if selected_value:
