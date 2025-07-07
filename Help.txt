@@ -1,0 +1,16 @@
+Welcome to MarineTox Predictor
+MarineTox Predictor, was developed by integrating multi-task deep learning with cross-domain knowledge-sharing mechanism, to facilitate end-to-end prediction of 24 saltwater toxicity tasks for 20 organisms spanning algae, crustaceans, invertebrates, mollusks and fish.
+
+1. Which data is included?
+-Estimated ecotoxicity data of 20 marine species for approximately 68,000 chemicals
+-Species sensitivity curves for 68,000 chemicals
+-Hazardous concentration for 5% of the species for 68,000 chemicals
+
+2. How to Search data?
+- Go to the left sidebar
+- Select search type: Chemical name/SMILES/Molecular formula
+- You can directly type in the search box for exact matching or select from the dropdown list of existing chemicals
+
+3. Notes
+-Only exact matches will return results
+-If no data is found, double-check spelling or try other search types
