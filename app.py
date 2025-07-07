@@ -1,6 +1,9 @@
 import streamlit as st
 import pandas as pd
 import os
+from docx import Document
+import requests
+from io import BytesIO
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
@@ -19,7 +22,23 @@ def load_data():
         st.error("❌ 未找到数据文件，请放置在应用根目录")
         return pd.DataFrame()
 
+# 加载帮助文档
+@st.cache_data
+def load_help_file():
+    help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/blob/main/Help%20Files.docx?raw=true"
+    try:
+        response = requests.get(help_url)
+        doc = Document(BytesIO(response.content))
+        help_content = []
+        for para in doc.paragraphs:
+            help_content.append(para.text)
+        return "\n".join(help_content)
+    except Exception as e:
+        st.error(f"❌ 帮助文档加载失败：{str(e)}")
+        return "Help content not available."
+
 df = load_data()
+help_content = load_help_file()
 
 # 页面整体样式
 page_style = """
@@ -30,6 +49,7 @@ page_style = """
     .section-title { font-size: 22px; font-weight: bold; color: #01579b; margin-top: 15px; }
     .data-label { font-weight: bold; color: #01579b; }
     section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
+    .help-content { background-color: white; padding: 15px; border-radius: 10px; margin-top: 20px; }
 </style>
 """
 
@@ -45,6 +65,11 @@ with st.sidebar:
     search_value = st.text_input(f"Enter {search_column}")
     dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
     selected_value = search_value.strip() if search_value else dropdown_value
+    
+    # 添加帮助文档部分
+    st.markdown('<div class="section-title">ℹ️ Help Documentation</div>', unsafe_allow_html=True)
+    with st.expander("View Help Content"):
+        st.markdown(f'<div class="help-content">{help_content}</div>', unsafe_allow_html=True)
 
 # --- 结果展示区 ---
 if selected_value:
