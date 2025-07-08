@@ -89,11 +89,15 @@ if selected_value:
             st.dataframe(ecotox_df, hide_index=True)
 
             # ✅ NOEC Values 表格，标题不显示
-            noec_cols = df.columns[23:27].tolist()
-            noec_df = pd.DataFrame({
-                "Species": [col.split('.')[0].strip() for col in noec_cols],
-                "NOEC": [row[col] for col in noec_cols]
-            })
+           # 正确地提取 NOEC 列并去除列名中的 .1 后缀
+noec_cols = df.columns[23:27].tolist()
+clean_noec_species = [col.split('.')[0].strip() for col in noec_cols]
+
+noec_df = pd.DataFrame({
+    "Species": clean_noec_species,
+    "NOEC": [row[col] for col in noec_cols]
+})
+
             st.dataframe(noec_df, hide_index=True)
 
             st.markdown("### SSD Curve (log-normal distribution)")
