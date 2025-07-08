@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-import requests
 import base64
 
 # 页面配置
@@ -44,30 +43,25 @@ with st.sidebar:
 
     st.markdown("---")
 
-    # Help 文件展示
+    # Help 文件下载按钮嵌入侧边栏底部
+    help_file_path = os.path.join(os.path.dirname(__file__), "Help Files.docx")
+    if os.path.exists(help_file_path):
+        with open(help_file_path, "rb") as f:
+            help_data = f.read()
+            b64_help = base64.b64encode(help_data).decode()
 
-
-# Help 文件下载按钮
-help_file_path = os.path.join(os.path.dirname(__file__), "Help Files.docx")
-
-if os.path.exists(help_file_path):
-    with open(help_file_path, "rb") as f:
-        help_data = f.read()
-        b64_help = base64.b64encode(help_data).decode()
-
-        help_download_link = f'''
-            <a href="data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,{b64_help}"
-               download="MarineTox_Help.docx"
-               style="display: inline-block; padding: 0.5em 1em; background-color: #1976D2;
-                      color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
-               📄 Click here to download Help File (Word)
-            </a>
-        '''
-        st.markdown("### 📘 Help File Download")
-        st.markdown(help_download_link, unsafe_allow_html=True)
-else:
-    st.warning("⚠️ Help file not found. Please ensure 'Help Files.docx' exists in the app directory.")
-
+            help_download_link = f'''
+                <a href="data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,{b64_help}"
+                   download="MarineTox_Help.docx"
+                   style="display: inline-block; padding: 0.5em 1em; background-color: #1976D2;
+                          color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                   📄 Click here to download Help File (Word)
+                </a>
+            '''
+            st.markdown("### 📘 Help File Download")
+            st.markdown(help_download_link, unsafe_allow_html=True)
+    else:
+        st.warning("⚠️ Help file not found. Please ensure 'Help Files.docx' exists in the app directory.")
 
 # ------------------ 主页面展示 ------------------
 if selected_value:
@@ -108,6 +102,5 @@ if selected_value:
                 "Value": [row[col] for col in ssd_cols]
             })
             st.dataframe(ssd_df, hide_index=True)
-
     else:
         st.warning(f"No match found for `{selected_value}` in `{search_column}`.")
