@@ -43,20 +43,23 @@ with st.sidebar:
 
     st.markdown("---")
 
-    # ✅ Help 文件展示按钮
-    if st.button("📖 Show Help"):
-        try:
-            help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
-            response = requests.get(help_url)
-            if response.status_code == 200:
-                st.markdown("### 📖 Help Information")
-                st.markdown(f"<pre>{response.text}</pre>", unsafe_allow_html=True)
-            else:
-                st.warning("Help file not found or failed to load.")
-        except:
-            st.error("Error fetching Help file from GitHub.")
+    # Help 展示控制按钮
+    show_help = st.checkbox("📖 Show Help File", value=False)
 
-# ------------------ 主区域内容 ------------------
+# ------------------ 主页面内容 ------------------
+if show_help:
+    try:
+        help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
+        response = requests.get(help_url)
+        if response.status_code == 200:
+            with st.expander("📖 Help Information", expanded=True):
+                st.markdown(response.text)
+        else:
+            st.warning("Help file not found or failed to load.")
+    except:
+        st.error("Error fetching Help file from GitHub.")
+
+# 化学品查询与展示
 if selected_value:
     filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
     
