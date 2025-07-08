@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import os
-import requests
 
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
@@ -23,18 +22,6 @@ st.markdown(page_style, unsafe_allow_html=True)
 # 页面标题
 st.markdown('<div class="title">MarineTox Predictor</div>', unsafe_allow_html=True)
 
-# =================== 📖 Help 文件显示在页面顶部 ====================
-try:
-    help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
-    response = requests.get(help_url)
-    if response.status_code == 200:
-        st.markdown("### 📖 Help Information")
-        st.markdown(f"<pre style='font-size: 16px; white-space: pre-wrap;'>{response.text}</pre>", unsafe_allow_html=True)
-    else:
-        st.warning("Help file not found or failed to load.")
-except:
-    st.error("Error fetching Help file from GitHub.")
-
 # =================== 加载数据 ====================
 @st.cache_data
 def load_data():
@@ -46,7 +33,7 @@ def load_data():
             st.error(f"❌ 数据加载失败：{str(e)}")
             return pd.DataFrame()
     else:
-        st.error("❌ 未找到数据文件，请放置于应用根目录")
+        st.error("❌ 未找到数据文件，请放置于项目根目录")
         return pd.DataFrame()
 
 df = load_data()
@@ -58,6 +45,20 @@ with st.sidebar:
     search_value = st.text_input(f"Enter {search_column}")
     dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
     selected_value = search_value.strip() if search_value else dropdown_value
+
+    st.markdown("---")
+    st.markdown("### 📄 Download Help File")
+
+    try:
+        with open("Help Files.docx", "rb") as file:
+            st.download_button(
+                label="📥 Click to Download Help (.docx)",
+                data=file,
+                file_name="MarineTox_Help.docx",
+                mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+            )
+    except FileNotFoundError:
+        st.warning("⚠️ Help 文件未找到，请将 'Help Files.docx' 放入项目目录。")
 
 # =================== 主页面展示 ====================
 if selected_value:
