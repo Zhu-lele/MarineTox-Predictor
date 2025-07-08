@@ -64,6 +64,7 @@ with st.sidebar:
         st.warning("⚠️ Help file not found. Please ensure 'Help Files.docx' exists in the app directory.")
 
 # ------------------ 主页面展示 ------------------
+# ------------------ 主页面展示 ------------------
 if selected_value:
     filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
     
@@ -87,10 +88,10 @@ if selected_value:
             })
             st.dataframe(ecotox_df, hide_index=True)
 
-            # 不显示 NOEC 标题，但保留表格
+            # ✅ NOEC Values 表格，标题不显示
             noec_cols = df.columns[23:27].tolist()
             noec_df = pd.DataFrame({
-                "Species": noec_cols,
+                "Species": [col.split('.')[0].strip() for col in noec_cols],
                 "NOEC": [row[col] for col in noec_cols]
             })
             st.dataframe(noec_df, hide_index=True)
