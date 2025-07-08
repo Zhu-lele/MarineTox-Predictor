@@ -6,6 +6,17 @@ import requests
 # 页面配置
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
+# 页面样式
+page_style = """
+<style>
+    body { background-color: #f5f8fb; }
+    .title { font-size: 55px; font-weight: bold; text-align: center; color: #01579b; margin: 20px 0; }
+    section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
+</style>
+"""
+st.markdown(page_style, unsafe_allow_html=True)
+st.markdown('<div class="title">MarineTox Predictor</div>', unsafe_allow_html=True)
+
 # 加载数据
 @st.cache_data
 def load_data():
@@ -22,19 +33,7 @@ def load_data():
 
 df = load_data()
 
-# 页面样式
-page_style = """
-<style>
-    body { background-color: #f5f8fb; }
-    .title { font-size: 55px; font-weight: bold; text-align: center; color: #01579b; margin: 20px 0; }
-    section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
-</style>
-"""
-
-st.markdown(page_style, unsafe_allow_html=True)
-st.markdown('<div class="title">MarineTox Predictor</div>', unsafe_allow_html=True)
-
-# 侧边栏
+# ------------------ 侧边栏 ------------------
 with st.sidebar:
     st.markdown("### 🔍 Chemical Search")
     search_column = st.selectbox("Search by", ["Chemical name", "SMILES", "Molecular formula"])
@@ -44,20 +43,20 @@ with st.sidebar:
 
     st.markdown("---")
 
-    # Help 按钮
+    # ✅ Help 文件展示按钮
     if st.button("📖 Show Help"):
         try:
-            help_url = "https://github.com/Zhu-lele/MarineTox-Predictor/blob/main/Help.txt"
+            help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
             response = requests.get(help_url)
             if response.status_code == 200:
                 st.markdown("### 📖 Help Information")
-                st.text(response.text)
+                st.markdown(f"<pre>{response.text}</pre>", unsafe_allow_html=True)
             else:
                 st.warning("Help file not found or failed to load.")
         except:
             st.error("Error fetching Help file from GitHub.")
 
-# 主区内容（不变）
+# ------------------ 主区域内容 ------------------
 if selected_value:
     filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
     
@@ -91,8 +90,11 @@ if selected_value:
 
             st.markdown("### SSD Curve (log-normal distribution)")
             ssd_cols = df.columns[27:32].tolist()
-            for col in ssd_cols:
-                st.write(f"**{col}:** {row[col]}")
+            ssd_df = pd.DataFrame({
+                "Parameter": ssd_cols,
+                "Value": [row[col] for col in ssd_cols]
+            })
+            st.dataframe(ssd_df, hide_index=True)
 
     else:
         st.warning(f"No match found for `{selected_value}` in `{search_column}`.")
