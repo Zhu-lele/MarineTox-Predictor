@@ -11,13 +11,31 @@ page_style = """
 <style>
     body { background-color: #f5f8fb; }
     .title { font-size: 55px; font-weight: bold; text-align: center; color: #01579b; margin: 20px 0; }
-    section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
+    section[data-testid="stSidebar"] * {
+        font-size: 20px !important;
+        font-weight: bold !important;
+        color: #01579b !important;
+    }
 </style>
 """
 st.markdown(page_style, unsafe_allow_html=True)
+
+# 页面标题
 st.markdown('<div class="title">MarineTox Predictor</div>', unsafe_allow_html=True)
 
-# 加载数据
+# =================== 📖 Help 文件显示在页面顶部 ====================
+try:
+    help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
+    response = requests.get(help_url)
+    if response.status_code == 200:
+        st.markdown("### 📖 Help Information")
+        st.markdown(f"<pre style='font-size: 16px; white-space: pre-wrap;'>{response.text}</pre>", unsafe_allow_html=True)
+    else:
+        st.warning("Help file not found or failed to load.")
+except:
+    st.error("Error fetching Help file from GitHub.")
+
+# =================== 加载数据 ====================
 @st.cache_data
 def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20241231.xlsx")
@@ -28,12 +46,12 @@ def load_data():
             st.error(f"❌ 数据加载失败：{str(e)}")
             return pd.DataFrame()
     else:
-        st.error("❌ 未找到数据文件，请放置在应用根目录")
+        st.error("❌ 未找到数据文件，请放置于应用根目录")
         return pd.DataFrame()
 
 df = load_data()
 
-# ------------------ 侧边栏 ------------------
+# =================== 侧边栏 ====================
 with st.sidebar:
     st.markdown("### 🔍 Chemical Search")
     search_column = st.selectbox("Search by", ["Chemical name", "SMILES", "Molecular formula"])
@@ -41,25 +59,7 @@ with st.sidebar:
     dropdown_value = st.selectbox(f"Or select from {search_column}", [""] + sorted(df[search_column].dropna().unique().tolist()))
     selected_value = search_value.strip() if search_value else dropdown_value
 
-    st.markdown("---")
-
-    # Help 展示控制按钮
-    show_help = st.checkbox("📖 Show Help File", value=False)
-
-# ------------------ 主页面内容 ------------------
-if show_help:
-    try:
-        help_url = "https://raw.githubusercontent.com/Zhu-lele/MarineTox-Predictor/main/Help.txt"
-        response = requests.get(help_url)
-        if response.status_code == 200:
-            with st.expander("📖 Help Information", expanded=True):
-                st.markdown(response.text)
-        else:
-            st.warning("Help file not found or failed to load.")
-    except:
-        st.error("Error fetching Help file from GitHub.")
-
-# 化学品查询与展示
+# =================== 主页面展示 ====================
 if selected_value:
     filtered_df = df[df[search_column].astype(str).str.strip().str.lower() == selected_value.lower()]
     
