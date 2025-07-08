@@ -27,9 +27,27 @@ page_style = """
 <style>
     body { background-color: #f5f8fb; }
     .title { font-size: 55px; font-weight: bold; text-align: center; color: #01579b; margin: 20px 0; }
-    section[data-testid="stSidebar"] * { font-size: 20px !important; font-weight: bold !important; color: #01579b !important; }
+
+    /* Sidebar 样式 */
+    section[data-testid="stSidebar"] * {
+        font-size: 20px !important;
+        font-weight: bold !important;
+        color: #01579b !important;
+    }
+
+    /* 表格字体放大 */
+    .stDataFrame div[role="gridcell"], 
+    .stDataFrame div[role="columnheader"] {
+        font-size: 20px !important;
+    }
+
+    /* Chemical 信息字体放大 */
+    .element-container h3, .element-container p {
+        font-size: 18px !important;
+    }
 </style>
 """
+
 st.markdown(page_style, unsafe_allow_html=True)
 st.markdown('<div class="title">MarineTox Predictor</div>', unsafe_allow_html=True)
 
