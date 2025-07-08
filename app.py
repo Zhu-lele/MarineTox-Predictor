@@ -53,8 +53,8 @@ with st.sidebar:
             help_download_link = f'''
                 <a href="data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,{b64_help}"
                    download="MarineTox_Help.docx"
-                   style="display: inline-block; padding: 0.5em 1em; background-color: #E0E0E0; color: black;
-                          color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                   style="display: inline-block; padding: 0.5em 1em; background-color: #f0f0f0; color: black;
+                          text-decoration: none; border-radius: 5px; font-weight: bold;">
                    📄 Click here to download Help File (Word)
                 </a>
             '''
@@ -87,7 +87,7 @@ if selected_value:
             })
             st.dataframe(ecotox_df, hide_index=True)
 
-            #st.markdown("### NOEC Values")
+            # ⛔ 删除 st.markdown("### NOEC Values")
             noec_cols = df.columns[23:27].tolist()
             noec_df = pd.DataFrame({
                 "Species": noec_cols,
