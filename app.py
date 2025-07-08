@@ -87,7 +87,7 @@ if selected_value:
             })
             st.dataframe(ecotox_df, hide_index=True)
 
-            # ⛔ 删除 st.markdown("### NOEC Values")
+            # 不显示 NOEC 标题，但保留表格
             noec_cols = df.columns[23:27].tolist()
             noec_df = pd.DataFrame({
                 "Species": noec_cols,
