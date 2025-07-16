@@ -7,12 +7,13 @@ import base64
 st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 
 # 加载数据
+# 加载数据
 @st.cache_data
 def load_data():
-    file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20250708.csv")
+    file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20250708.xlsx")
     if os.path.exists(file_path):
         try:
-            return pd.read_csv(file_path)
+            return pd.read_excel(file_path, engine="openpyxl")
         except Exception as e:
             st.error(f"❌ 数据加载失败：{str(e)}")
             return pd.DataFrame()
