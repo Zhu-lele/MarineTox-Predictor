@@ -12,7 +12,7 @@ def load_data():
     file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20250708.csv")
     if os.path.exists(file_path):
         try:
-            return pd.read_excel(file_path, engine="openpyxl")
+            return pd.read_csv(file_path)
         except Exception as e:
             st.error(f"❌ 数据加载失败：{str(e)}")
             return pd.DataFrame()
