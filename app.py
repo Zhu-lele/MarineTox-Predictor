@@ -126,3 +126,18 @@ if selected_value:
             st.dataframe(ssd_df, hide_index=True)
     else:
         st.warning(f"No match found for `{selected_value}` in `{search_column}`.")
+
+# ------------------ 页脚（联系方式） ------------------
+footer = """
+<hr style="margin-top: 50px; margin-bottom: 10px;">
+<div style="text-align: center; font-size:18px; color:#444;">
+    If you have any questions, please contact 
+    <a href="mailto:Zhu_lll@163.com" style="color:#01579b; text-decoration:none; font-weight:bold;">
+        Zhu_lll@163.com
+    </a><br>
+    School of Environmental Science and Technology, Dalian University of Technology, Dalian, 116024, China
+</div>
+"""
+st.markdown(footer, unsafe_allow_html=True)
+
+
