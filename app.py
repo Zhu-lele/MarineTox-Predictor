@@ -10,7 +10,7 @@ st.set_page_config(page_title="MarineTox Predictor", layout="wide")
 # 加载数据
 @st.cache_data
 def load_data():
-    file_path = os.path.join(os.path.dirname(__file__), "chemicalhazarddataset-20251028-上传streamlit.xlsx")
+    file_path = os.path.join(os.path.dirname(__file__), "chemical hazard databaset-20251028-上传streamlit.xlsx")
     if os.path.exists(file_path):
         try:
             return pd.read_excel(file_path, engine="openpyxl")
@@ -139,6 +139,7 @@ footer = """
 </div>
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
