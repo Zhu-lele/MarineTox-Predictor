@@ -99,7 +99,7 @@ if selected_value:
 
         with col2:
             st.markdown("### Marine Ecotoxicity Data [log (mg/L)]")
-            lc50_ec50_cols = df.columns[3:22].tolist()
+            lc50_ec50_cols = df.columns[3:23].tolist()
             ecotox_df = pd.DataFrame({
                 "Species": lc50_ec50_cols,
                 "LC50/EC50": [row[col] for col in lc50_ec50_cols]
@@ -107,7 +107,7 @@ if selected_value:
             st.dataframe(ecotox_df, hide_index=True)
 
             # ✅ NOEC Values 表格，去除“.1”
-            noec_cols = df.columns[22:25].tolist()
+            noec_cols = df.columns[23:26].tolist()
             clean_noec_species = [col.replace(".1", "").strip() for col in noec_cols]
 
             noec_df = pd.DataFrame({
@@ -118,7 +118,7 @@ if selected_value:
 
             # ✅ SSD 曲线展示
             st.markdown("### SSD Curve (log-normal distribution)")
-            ssd_cols = df.columns[25:31].tolist()
+            ssd_cols = df.columns[26:32].tolist()
             ssd_df = pd.DataFrame({
                 "Parameter": ssd_cols,
                 "Value": [row[col] for col in ssd_cols]
@@ -139,6 +139,7 @@ footer = """
 </div>
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
