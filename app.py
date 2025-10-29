@@ -117,7 +117,7 @@ if selected_value:
             st.dataframe(noec_df, hide_index=True)
 
             # ✅ SSD 曲线展示
-            st.markdown("### SSD Curve (log-normal distribution)")
+            st.markdown("### SSD Curve")
             ssd_cols = df.columns[26:32].tolist()
             ssd_df = pd.DataFrame({
                 "Parameter": ssd_cols,
@@ -139,6 +139,7 @@ footer = """
 </div>
 """
 st.markdown(footer, unsafe_allow_html=True)
+
 
 
 
